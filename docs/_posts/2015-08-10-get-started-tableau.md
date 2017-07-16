@@ -1,8 +1,8 @@
 ---
-layout: post
 title: "[vis] Getting Started With Tableau"
 date:   2015-08-10 16:16:01 -0600
-categories: visualization
+categories: 
+  - visualization
 ---
 ## Intro to Tableau
 Aspired by the course 'Data Visualization' offered by University of Illinois on Cousera, I have worked on the interactive data visualization using Tableau. There is a free version of [Tableau Public](https://public.tableau.com/s/) is available and you can upload the visualization online for sharing.    

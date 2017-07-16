@@ -1,12 +1,12 @@
 ---
-layout: post
 title: "[DL] Digit Recognition with Tensor Flow"
 date: 2017-06-27 16:16:01 +0800
-categories: deep learning
+categories: 
+  - deep learning
 tags:
-    - tensorflow
-    - python
-    - deep learning
+  - tensorflow
+  - python
+  - deep learning
 ---
 
 This time I am going to continue with the kaggle 101 level competition – [digit recogniser](https://www.kaggle.com/c/digit-recognizer) with deep learning tool Tensor Flow.   

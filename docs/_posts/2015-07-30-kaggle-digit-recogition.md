@@ -1,8 +1,11 @@
 ---
-layout: post
 title:  "[kaggle] Recognize the Digits"
 date:   2015-07-30 16:16:01 -0600
-categories: kaggle, SVM, PCA
+categories: 
+  - kaggle
+tags:
+  - SVM
+  - PCA
 ---
 This time I am going to demostrate the kaggle 101 level competition - <a href="https://www.kaggle.com/c/digit-recognizer" target="_blank">digit recogniser</a>. We are asked to train a model to recogize the digit from the pixel data in this competition. <a href="https://www.kaggle.com/c/digit-recognizer/data" target="_blank">The data set</a> is available here.
 description of the data:

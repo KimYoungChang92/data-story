@@ -1,5 +1,4 @@
 ---
-layout: post
 title: "[RecSys] Implementation of Model Based Recommendation System in R"
 date: 2016-12-19 16:16:01 +0800
 categories: recsys

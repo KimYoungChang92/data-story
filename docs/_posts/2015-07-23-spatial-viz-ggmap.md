@@ -1,8 +1,9 @@
 ---
-layout: post
 title:  "[vis] Spatial Visualization with ggmap R package"
 date:   2015-07-23 16:16:01 -0600
-categories: kaggle, visualization
+categories: 
+  - kaggle
+  - visualization
 ---  
   
 [ggmap](https://cran.r-project.org/web/packages/ggmap/index.html), which is an R package built to visualize with map, is very similar to [ggplot2](http://ggplot2.org/). And its output is ‘ggplot’ class, which means it also support layered visualization just like ggplot2. I will demonstrate with two examples "[Crimes in San Fransisco](https://www.kaggle.com/c/sf-crime/data)" and "[Taxi in Porto](https://www.kaggle.com/c/pkdd-15-predict-taxi-service-trajectory-i/data)". The data of both examples are taken from kaggle.   

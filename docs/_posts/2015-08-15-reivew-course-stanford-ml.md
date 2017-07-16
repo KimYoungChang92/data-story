@@ -1,8 +1,8 @@
 ---
-layout: post
 title: "[notes] Review on Stanford Machine Learning Course"
 date: 2015-08-15 16:16:01 +0800
-categories: notes
+categories: 
+  - notes
 ---
 
 I have been signed up for this course for a long time. And since last week, I finally managed to complete it with a good score.   
