@@ -1,0 +1,673 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.4.2 by Michael Rose
+  Copyright 2017 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE.txt
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin SEO -->
+
+
+
+
+
+
+
+
+
+<title>[RecSys] Job Hunting Like A Data Analyst (Part III) - Chaoran’s Data Story</title>
+
+
+
+
+<meta name="description" content="Continued with previous post – Explore the Job Market, this week I am going to develop a simple recommender system to find a suitable job .">
+
+
+
+
+<meta name="author" content="Chaoran Liu">
+
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="Chaoran's Data Story">
+<meta property="og:title" content="[RecSys] Job Hunting Like A Data Analyst (Part III)">
+
+
+  <link rel="canonical" href="http://localhost:4000/job-hunting-recommender/">
+  <meta property="og:url" content="http://localhost:4000/job-hunting-recommender/">
+
+
+
+  <meta property="og:description" content="Continued with previous post – Explore the Job Market, this week I am going to develop a simple recommender system to find a suitable job .">
+
+
+
+
+
+  
+
+  
+
+
+
+
+
+  <meta property="og:type" content="article">
+  <meta property="article:published_time" content="2015-09-14T16:16:01+08:00">
+
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context" : "http://schema.org",
+      "@type" : "Person",
+      "name" : "Chaoran Liu",
+      "url" : "http://localhost:4000",
+      "sameAs" : null
+    }
+  </script>
+
+
+
+
+
+
+<!-- end SEO -->
+
+
+<link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="Chaoran's Data Story Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://localhost:4000/assets/css/main.css">
+
+<!--[if lte IE 9]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+<meta http-equiv="cleartype" content="on">
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use http://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+  </head>
+
+  <body class="layout--single">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+    <div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <a class="site-title" href="http://localhost:4000/">Chaoran's Data Story</a>
+        <ul class="visible-links">
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/about/">About</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/year-archive/">Posts</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/categories/">Categories</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/tags/">Tags</a></li>
+          
+        </ul>
+        <button><div class="navicon"></div></button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="https://rawgit.com/6chaoran/DataStory/master/profile_pic.jpg" alt="Chaoran Liu" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name" itemprop="name">Chaoran Liu</h3>
+    
+      <p class="author__bio" itemprop="description">
+        data science enthusiast
+      </p>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="http://schema.org/Place">
+          <i class="fa fa-fw fa-map-marker" aria-hidden="true"></i> <span itemprop="name">Singapore</span>
+        </li>
+      
+
+      
+
+      
+        <li>
+          <a href="mailto:chaoran.liu@icloud.com">
+            <meta itemprop="email" content="chaoran.liu@icloud.com" />
+            <i class="fa fa-fw fa-envelope-square" aria-hidden="true"></i> Email
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+        <li>
+          <a href="https://www.linkedin.com/in/liuchaoran" itemprop="sameAs">
+            <i class="fa fa-fw fa-linkedin-square" aria-hidden="true"></i> LinkedIn
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+        <li>
+          <a href="https://github.com/6chaoran" itemprop="sameAs">
+            <i class="fa fa-fw fa-github" aria-hidden="true"></i> GitHub
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs">
+      <i class="fa fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="[RecSys] Job Hunting Like A Data Analyst (Part III)">
+    <meta itemprop="description" content="Continued with previous post – Explore the Job Market, this week I am going to develop a simple recommender system to find a suitable job .">
+    <meta itemprop="datePublished" content="September 14, 2015">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 class="page__title" itemprop="headline">[RecSys] Job Hunting Like A Data Analyst (Part III)
+</h1>
+          
+            <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+
+
+  6 minute read
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        <p>Continued with previous post – Explore the Job Market, this week I am going to develop a simple recommender system to find a suitable job .</p>
+
+<h2 id="recommender">Recommender</h2>
+
+<p>Let’s talk some background of recommendation system. A typical example of recommendation could be product recommended in the sidebar at Amazon or people you may know in Facebook. <br />
+Usually we can categorised recommender into two types:</p>
+
+<h3 id="1-content-based-recommendation">1. Content Based Recommendation:</h3>
+
+<p>Content-based could mean user-based or product-based and the choice is depended on the mission of the business and information sparsity. A set of attributes are required to characterise the product or user, in order to have a customised and accurate prediction. <br />
+The problem is that sometimes there are not good way to automatically attribute new product or user.</p>
+
+<h3 id="2-collaborative-filtering">2. Collaborative Filtering:</h3>
+
+<p>As the name implies, collaborative filtering will make use of both user and product information to make the recommendation.</p>
+
+<h4 id="similarity">similarity</h4>
+
+<p>The similar product o user is defined by the similarity. However there are quite some different definition of similarity in use, e.g euclidean distance, pearson coefficient, mannhaton distance…</p>
+
+<h2 id="feature-creation">Feature Creation</h2>
+
+<p>If you read the previous, you probably will surprise why we convert the skills to a vector just to count the occurrence. In fact vectorizing the skill is the step prepared to calculate the skill similarity between the job and me. So here I have prepared more complete list of skills:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># create feature vector for skills</span>
+<span class="c"># a more complete skills of Data Analyst</span>
+<span class="n">skills</span><span class="o">=</span><span class="p">[</span><span class="s">'excel'</span><span class="p">,</span><span class="s">'r'</span><span class="p">,</span><span class="s">'sql'</span><span class="p">,</span><span class="s">'python'</span><span class="p">,</span><span class="s">'tableau'</span><span class="p">,</span><span class="s">'d3'</span><span class="p">,</span><span class="s">'qlikview'</span><span class="p">,</span><span class="s">'hadoop'</span><span class="p">,</span><span class="s">'matlab'</span><span class="p">,</span><span class="s">'scala'</span><span class="p">,</span><span class="s">'sas'</span><span class="p">,</span><span class="s">'spss'</span><span class="p">]</span>
+<span class="c"># add my skill if not inside the pre-define list</span>
+<span class="n">skills</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">skills</span><span class="o">+</span><span class="n">mySkill</span><span class="p">))</span>
+<span class="c"># split text into words for each job post</span>
+<span class="n">words</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s">'JD'</span><span class="p">]</span><span class="o">.</span><span class="nb">map</span><span class="p">(</span><span class="n">cleanText</span><span class="p">)</span>
+<span class="c"># convert the job post skills to binary vector</span>
+<span class="n">featureJobSkill</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">convertTextFeature</span><span class="p">(</span><span class="n">text</span><span class="p">,</span><span class="n">skills</span><span class="p">)</span> <span class="k">for</span> <span class="n">text</span> <span class="ow">in</span> <span class="n">words</span><span class="p">])</span>
+<span class="c"># convert the my skills to a binary vector</span>
+<span class="n">featureMySkill</span><span class="o">=</span><span class="n">convertTextFeature</span><span class="p">(</span><span class="n">mySkill</span><span class="p">,</span><span class="n">skills</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<h2 id="similarity-definition">Similarity Definition</h2>
+
+<p>My first idea is to match exactly my skills with the job skills. Either the case I have additional skill or the job requires a different skill will consider as dissimilar. In this case we can simply use euclidean distance to define the difference (denotes as d), then the similarity will be define as 1/(1+d) to convert it to a [0,1] range. The piece of idea is realised by the code below and let’s call it similarity1.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># calculate the euclidean distance of two vectors</span>
+<span class="k">def</span> <span class="nf">euclideanDistance</span><span class="p">(</span><span class="n">f1</span><span class="p">,</span><span class="n">f2</span><span class="p">):</span>
+    <span class="c"># to make sure the two vector are having same dimension</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">f1</span><span class="p">)</span><span class="o">==</span><span class="nb">len</span><span class="p">(</span><span class="n">f2</span><span class="p">):</span>
+        <span class="n">f1</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">f1</span><span class="p">)</span>
+        <span class="n">f2</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">f2</span><span class="p">)</span>
+        <span class="n">square</span><span class="o">=</span><span class="p">(</span><span class="n">f1</span><span class="o">-</span><span class="n">f2</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+        <span class="c"># return square root of the sum of squares</span>
+        <span class="k">return</span> <span class="nb">round</span><span class="p">(</span><span class="n">square</span><span class="o">.</span><span class="nb">sum</span><span class="p">()</span><span class="o">**</span><span class="mf">0.5</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">None</span>
+ 
+<span class="k">def</span> <span class="nf">similarity1</span><span class="p">(</span><span class="n">f1</span><span class="p">,</span><span class="n">f2</span><span class="p">):</span>
+    <span class="n">d</span><span class="o">=</span><span class="n">euclideanDistance</span><span class="p">(</span><span class="n">f1</span><span class="p">,</span><span class="n">f2</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">d</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">None</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">d</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>However, sometimes we don’t want a minus score if we are having more skills than required, so I developed another similarity, which I call it similarity2.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">similarity2</span><span class="p">(</span><span class="n">f1</span><span class="p">,</span><span class="n">f2</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">f1</span><span class="p">)</span><span class="o">==</span><span class="nb">len</span><span class="p">(</span><span class="n">f2</span><span class="p">):</span>
+        <span class="n">f1</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">f1</span><span class="p">)</span>
+        <span class="n">f2</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">f2</span><span class="p">)</span>
+        <span class="n">diff</span><span class="o">=</span><span class="p">(</span><span class="n">f1</span><span class="o">-</span><span class="n">f2</span><span class="p">)</span>
+        <span class="c"># f1 is job skill vector</span>
+        <span class="c"># f2 is my skill vector</span>
+        <span class="c"># ignore the case that I have more skills than required</span>
+        <span class="n">diff</span><span class="p">[</span><span class="n">diff</span><span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span>
+        <span class="n">sum_square</span><span class="o">=</span><span class="n">diff</span><span class="o">.</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="nb">sum</span><span class="p">()</span>
+        <span class="n">similarity</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">sum_square</span><span class="o">**</span><span class="mf">0.5</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">round</span><span class="p">(</span><span class="n">similarity</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">None</span>
+</code></pre>
+</div>
+
+<h2 id="assemble-into-a-simple-recommender">Assemble into a simple recommender</h2>
+
+<p>Now we will have a recommender requires user to input his/her skills and years of experience and we also want to have a freedom to choose output how many jobs that are the most suitable as well as the choice of the similarity function that we defined earlier. <br />
+For those who have experience applying jobs, there is usually no harm to try the position with 2 year experience more than that you have. And I’m going to put that consideration into the recommendation as well.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">jobRecommender</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">mySkill</span><span class="p">,</span><span class="n">myExperience</span><span class="p">,</span><span class="n">N</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">simlarityFunc</span><span class="o">=</span><span class="n">similarity1</span><span class="p">):</span>
+    <span class="c"># add experience column</span>
+    <span class="c"># the detail of getExperience is in previous post</span>
+    <span class="n">experience</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s">'JD'</span><span class="p">]</span><span class="o">.</span><span class="nb">map</span><span class="p">(</span><span class="n">getExperience</span><span class="p">)</span>
+    <span class="n">experience</span><span class="p">[(</span><span class="n">experience</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span><span class="o">|</span><span class="p">(</span><span class="n">experience</span><span class="o">&amp;</span><span class="n">gt</span><span class="p">;</span><span class="mi">20</span><span class="p">)]</span><span class="o">=</span><span class="bp">None</span>
+    <span class="n">data</span><span class="p">[</span><span class="s">'experience'</span><span class="p">]</span><span class="o">=</span><span class="n">experience</span>
+ 
+    <span class="c"># create feature vector for skills</span>
+    <span class="c"># a more complete skills of Data Analyst</span>
+    <span class="n">skills</span><span class="o">=</span><span class="p">[</span><span class="s">'excel'</span><span class="p">,</span><span class="s">'r'</span><span class="p">,</span><span class="s">'sql'</span><span class="p">,</span><span class="s">'python'</span><span class="p">,</span><span class="s">'tableau'</span><span class="p">,</span><span class="s">'d3'</span><span class="p">,</span><span class="s">'qlikview'</span><span class="p">,</span><span class="s">'hadoop'</span><span class="p">,</span><span class="s">'matlab'</span><span class="p">,</span><span class="s">'scala'</span><span class="p">,</span><span class="s">'sas'</span><span class="p">,</span><span class="s">'spss'</span><span class="p">]</span>
+    <span class="c"># add my skill if not inside the pre-define list</span>
+    <span class="n">skills</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">skills</span><span class="o">+</span><span class="n">mySkill</span><span class="p">))</span>
+    <span class="c"># split text into words for each job post</span>
+    <span class="n">words</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s">'JD'</span><span class="p">]</span><span class="o">.</span><span class="nb">map</span><span class="p">(</span><span class="n">cleanText</span><span class="p">)</span>
+    <span class="c"># convert the job post skills to binary vector</span>
+    <span class="n">featureJobSkill</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">convertTextFeature</span><span class="p">(</span><span class="n">text</span><span class="p">,</span><span class="n">skills</span><span class="p">)</span> <span class="k">for</span> <span class="n">text</span> <span class="ow">in</span> <span class="n">words</span><span class="p">])</span>
+    <span class="c"># convert the my skills to a binary vector</span>
+    <span class="n">featureMySkill</span><span class="o">=</span><span class="n">convertTextFeature</span><span class="p">(</span><span class="n">mySkill</span><span class="p">,</span><span class="n">skills</span><span class="p">)</span>
+ 
+    <span class="c"># calculate similarity of the job and user in terms of skills</span>
+    <span class="n">data</span><span class="p">[</span><span class="s">'similarity'</span><span class="p">]</span><span class="o">=</span><span class="n">featureJobSkill</span><span class="o">.</span><span class="nb">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">simlarityFunc</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">featureMySkill</span><span class="p">),</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+ 
+    <span class="c"># filter the experience requirement</span>
+    <span class="c"># add 2 more years for the experience filter</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="o">.</span><span class="n">experience</span><span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">=</span><span class="p">(</span><span class="n">myExperience</span><span class="o">+</span><span class="mi">2</span><span class="p">)]</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="s">'similarity'</span><span class="p">,</span><span class="n">ascending</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+ 
+    <span class="c"># recommend the top N suitable jobs</span>
+    <span class="n">N</span><span class="o">=</span><span class="nb">min</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">),</span><span class="n">N</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">data</span><span class="p">[[</span><span class="s">'title'</span><span class="p">,</span><span class="s">'company'</span><span class="p">,</span><span class="s">'similarity'</span><span class="p">]][:</span><span class="n">N</span><span class="p">]</span>
+</code></pre>
+</div>
+
+<p>Let’s the test the result. For example, I have a list of skills: excel, r, matlab, python, tableau, sql and I don’t have experience of working as a Data Analyst.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">myskill</span><span class="o">=</span><span class="p">[</span><span class="s">'excel'</span><span class="p">,</span><span class="s">'sql'</span><span class="p">,</span><span class="s">'r'</span><span class="p">,</span><span class="s">'python'</span><span class="p">,</span><span class="s">'matlab'</span><span class="p">,</span><span class="s">'tableau'</span><span class="p">]</span>
+<span class="n">myExperience</span><span class="o">=</span><span class="mi">0</span>
+<span class="k">print</span> <span class="n">jobRecommender</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">myskill</span><span class="p">,</span><span class="n">myExperience</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">N</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">simlarityFunc</span><span class="o">=</span><span class="n">similarity1</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">jobRecommender</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">myskill</span><span class="p">,</span><span class="n">myExperience</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">N</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">simlarityFunc</span><span class="o">=</span><span class="n">similarity2</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>Using similarity function 1, I have a list of recommended job post:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>title</th>
+      <th>company</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>31</td>
+      <td>Senior Data Analyst</td>
+      <td>ZALORA Group</td>
+    </tr>
+    <tr>
+      <td>52</td>
+      <td>Technology, Prime Services Technology, Client …</td>
+      <td>Goldman Sachs</td>
+    </tr>
+    <tr>
+      <td>60</td>
+      <td>Market Risk Reporting Analyst</td>
+      <td>Credit Suisse</td>
+    </tr>
+    <tr>
+      <td>186</td>
+      <td>Application Support Analyst</td>
+      <td>AccorHotels</td>
+    </tr>
+    <tr>
+      <td>215</td>
+      <td>Forecasting Analyst</td>
+      <td>Xilinx</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Using similarity function 2, the recommendation is like:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>title</th>
+      <th>company</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>287</td>
+      <td>PricingRevenue Management Analyst (South Distr…</td>
+      <td>UPS</td>
+    </tr>
+    <tr>
+      <td>268</td>
+      <td>Application Support Analyst</td>
+      <td>AccorHotels</td>
+    </tr>
+    <tr>
+      <td>426</td>
+      <td>TRIRIGA Application Developer</td>
+      <td>IBM</td>
+    </tr>
+    <tr>
+      <td>394</td>
+      <td>(SGP-Singapore) IPB – Due Diligence Analyst</td>
+      <td>Citi</td>
+    </tr>
+    <tr>
+      <td>387</td>
+      <td>(SGP-Singapore) IT Business Implementation Ana…</td>
+      <td>Oracle</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Having done that, you can input your own skill set and experience to do some experience for a more efficient job hunting.</p>
+
+<h2 id="the-end">The End</h2>
+
+<p>It comes to the part III of the Job Hunting series and I have successfully draw a period to this project, as I going to work as a Junior Data Analyst soon after a short holiday.</p>
+
+<h2 id="some-suggestions-for-future-data-analyst">Some Suggestions for future Data Analyst</h2>
+
+<h3 id="1-online-course--nano-degree-is-useful">1. Online course / nano-degree is useful</h3>
+
+<p>Coursera/edX/Udacity offer a lot of course in data science, data analysis and they are free if you care about the certificates. I personally took the data science specialization in coursera offered by Johns Hopkins University. The difficulty level is moderate and the programming is mainly in R, which is quite easy to pick up.</p>
+
+<h3 id="2-develop-a-stack-of-skills">2. Develop a stack of skills</h3>
+
+<ul>
+  <li>Statistics:
+I learnt some statistics modules in university, which are quite fundamental but indeed useful to understand many concept in machine learning and data analysis context.</li>
+  <li>Programming:
+The two most popular programming tools are python and R for data scientist and data analyst. I learnt R from R programming course in Coursera. For python language, I am still picking up and personally feel “Introduction to Computer Science and Programming in Python” offered in edX and “Design of Computer Program” in Udacity are especially helpful.</li>
+  <li>Database and querying:
+A series of database course on Stanford Online is very beneficial. The SQL quiz is somewhat challenging for beginners.</li>
+  <li>Machine Learning:
+The practical machine learning from Johns Hopkins University is a good start. The course is taught in R and mainly used caret package for ML. A more in-depth course is Stanford Machine Learning class taught by Andrew Ng. The class is taught in Matlab.</li>
+</ul>
+
+<h3 id="3-handles-on-practice">3. Handles on practice</h3>
+
+<ul>
+  <li>Participate Kaggle competition:
+Try those kaggle 101 competitions, because there are usually a lot of tutorials, codes, demos are already available for you to get your foot wet in data analysis and machine learning in practice. And don’t get addicted to those featured level competition, because those teams are really into the money and there are not much information shared before the deadline.</li>
+  <li>Keep doing some mini-projects:
+Find some topics that interest you and try to think about the solutions in data analyst view point. This thinking process is often asked in an interview, such as “How you do think can apply machine learning in your work/business?”</li>
+  <li>Create your own blog:
+I’m trying to update a blog weekly, not only to show off my learning, but also remind me to do the some summary and review on skills. I personally feel it is very beneficial. Once the hiring manager open your blog from your resume, your chance to stand out is much higher.</li>
+</ul>
+
+<h3 id="4-find-a-internpart-time-job">4. Find a intern/part time job</h3>
+
+<p>Unlike U.S. where a lot of Tech companies hiring data analyst/scientist, Singapore’s market is not so demanding. So it’s not bad idea to get look to start with a freelance/part-time analyst or even working for free. sg.startup.job is a platform where some interesting analytical position will open by start-up companies.</p>
+
+<h3 id="5-good-luck-and-happy-hunting">5. Good Luck and Happy Hunting</h3>
+
+<p>Last and not least, decorate your resume and be confident in interview.
+The rest is just luck and persistence. Happy Job Hunting and Good Luck!</p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fa fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="http://localhost:4000/tags/#python" class="page__taxonomy-item" rel="tag">python</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fa fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="http://localhost:4000/categories/#recsys" class="page__taxonomy-item" rel="tag">recsys</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> Updated:</strong> <time datetime="2015-09-14T16:16:01+08:00">September 14, 2015</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=[RecSys] Job Hunting Like A Data Analyst (Part III) http://localhost:4000/job-hunting-recommender/" class="btn btn--twitter" title="Share on Twitter"><i class="fa fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/job-hunting-recommender/" class="btn btn--facebook" title="Share on Facebook"><i class="fa fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=http://localhost:4000/job-hunting-recommender/" class="btn btn--google-plus" title="Share on Google Plus"><i class="fa fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://localhost:4000/job-hunting-recommender/" class="btn btn--linkedin" title="Share on LinkedIn"><i class="fa fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="http://localhost:4000/job-hunting-exploratory-analysis/" class="pagination--pager" title="[exploratory analysis] Job Hunting Like A Data Analyst (Part II)
+">Previous</a>
+    
+    
+      <a href="http://localhost:4000/tableau-intersection-filter/" class="pagination--pager" title="[vis] Tableau Intersection Filter Tutorial
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+    
+    
+    
+      <li><a href="http://github.com/6chaoran"><i class="fa fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+    
+    
+    
+    <li><a href="http://localhost:4000/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2017 Chaoran Liu. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    <script src="http://localhost:4000/assets/js/main.min.js"></script>
+
+
+
+
+
+  </body>
+</html>

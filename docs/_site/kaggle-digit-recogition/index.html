@@ -1,0 +1,544 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.4.2 by Michael Rose
+  Copyright 2017 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE.txt
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin SEO -->
+
+
+
+
+
+
+
+
+
+<title>[kaggle] Recognize the Digits - Chaoran’s Data Story</title>
+
+
+
+
+<meta name="description" content="This time I am going to demostrate the kaggle 101 level competition - digit recogniser. We are asked to train a model to recogize the digit from the pixel data in this competition. The data set is available here.description of the data:  label: the integers from 0 - 9;  features: pixel001-pixel784, which are rolled out from 28x28 digit image;  pixel data is ranged from 0 -255, which indicating the brightness of the pixel in grey scale;Visualize the digit:Let’s randomly look at 100 digit examples:">
+
+
+
+
+<meta name="author" content="Chaoran Liu">
+
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="Chaoran's Data Story">
+<meta property="og:title" content="[kaggle] Recognize the Digits">
+
+
+  <link rel="canonical" href="http://localhost:4000/kaggle-digit-recogition/">
+  <meta property="og:url" content="http://localhost:4000/kaggle-digit-recogition/">
+
+
+
+  <meta property="og:description" content="This time I am going to demostrate the kaggle 101 level competition - digit recogniser. We are asked to train a model to recogize the digit from the pixel data in this competition. The data set is available here.description of the data:  label: the integers from 0 - 9;  features: pixel001-pixel784, which are rolled out from 28x28 digit image;  pixel data is ranged from 0 -255, which indicating the brightness of the pixel in grey scale;Visualize the digit:Let’s randomly look at 100 digit examples:">
+
+
+
+
+
+  
+
+  
+
+
+
+
+
+  <meta property="og:type" content="article">
+  <meta property="article:published_time" content="2015-07-31T06:16:01+08:00">
+
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context" : "http://schema.org",
+      "@type" : "Person",
+      "name" : "Chaoran Liu",
+      "url" : "http://localhost:4000",
+      "sameAs" : null
+    }
+  </script>
+
+
+
+
+
+
+<!-- end SEO -->
+
+
+<link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="Chaoran's Data Story Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://localhost:4000/assets/css/main.css">
+
+<!--[if lte IE 9]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+<meta http-equiv="cleartype" content="on">
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use http://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+  </head>
+
+  <body class="layout--single">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+    <div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <a class="site-title" href="http://localhost:4000/">Chaoran's Data Story</a>
+        <ul class="visible-links">
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/about/">About</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/year-archive/">Posts</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/categories/">Categories</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/tags/">Tags</a></li>
+          
+        </ul>
+        <button><div class="navicon"></div></button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="https://rawgit.com/6chaoran/DataStory/master/profile_pic.jpg" alt="Chaoran Liu" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name" itemprop="name">Chaoran Liu</h3>
+    
+      <p class="author__bio" itemprop="description">
+        data science enthusiast
+      </p>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="http://schema.org/Place">
+          <i class="fa fa-fw fa-map-marker" aria-hidden="true"></i> <span itemprop="name">Singapore</span>
+        </li>
+      
+
+      
+
+      
+        <li>
+          <a href="mailto:chaoran.liu@icloud.com">
+            <meta itemprop="email" content="chaoran.liu@icloud.com" />
+            <i class="fa fa-fw fa-envelope-square" aria-hidden="true"></i> Email
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+        <li>
+          <a href="https://www.linkedin.com/in/liuchaoran" itemprop="sameAs">
+            <i class="fa fa-fw fa-linkedin-square" aria-hidden="true"></i> LinkedIn
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+        <li>
+          <a href="https://github.com/6chaoran" itemprop="sameAs">
+            <i class="fa fa-fw fa-github" aria-hidden="true"></i> GitHub
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs">
+      <i class="fa fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="[kaggle] Recognize the Digits">
+    <meta itemprop="description" content="This time I am going to demostrate the kaggle 101 level competition - digit recogniser. We are asked to train a model to recogize the digit from the pixel data in this competition. The data set is available here.description of the data:  label: the integers from 0 - 9;  features: pixel001-pixel784, which are rolled out from 28x28 digit image;  pixel data is ranged from 0 -255, which indicating the brightness of the pixel in grey scale;Visualize the digit:Let’s randomly look at 100 digit examples:">
+    <meta itemprop="datePublished" content="July 30, 2015">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 class="page__title" itemprop="headline">[kaggle] Recognize the Digits
+</h1>
+          
+            <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+
+
+  2 minute read
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        <p>This time I am going to demostrate the kaggle 101 level competition - <a href="https://www.kaggle.com/c/digit-recognizer" target="_blank">digit recogniser</a>. We are asked to train a model to recogize the digit from the pixel data in this competition. <a href="https://www.kaggle.com/c/digit-recognizer/data" target="_blank">The data set</a> is available here.
+description of the data:</p>
+<ol>
+  <li>label: the integers from 0 - 9;</li>
+  <li>features: pixel001-pixel784, which are rolled out from 28x28 digit image;</li>
+  <li>pixel data is ranged from 0 -255, which indicating the brightness of the pixel in grey scale;</li>
+</ol>
+<h2>Visualize the digit:</h2>
+<p>Let’s randomly look at 100 digit examples:</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">display</span><span class="p">(</span><span class="n">test</span><span class="p">[</span><span class="n">sample</span><span class="p">(</span><span class="m">28000</span><span class="p">,</span><span class="m">100</span><span class="p">),],</span><span class="m">28</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<p><img class="wp-image-81 size-full" src="https://6chaoran.files.wordpress.com/2015/07/unnamed-chunk-1-1.png" alt="unnamed-chunk-1-1" width="504" height="504" /> 28x28 visualization[</p>
+
+<!--more-->
+<h2>Dimension Reduction 1:</h2>
+<p>As we are having 784 features, which are prabably too many for training. We noticed the digits are well distinguishable, so that may be managable with lower resolution, say 28x28 to 14x14, which will significantly reduces the features from 784 to 196!
+The idea is to find the brightest pixel (max) within the adjance 2x2 grid.</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="w">  </span><span class="n">reduceDimfunction</span><span class="p">(</span><span class="n">data</span><span class="p">){</span><span class="w">
+  </span><span class="n">posmatrix</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">784</span><span class="p">,</span><span class="m">28</span><span class="p">,</span><span class="m">28</span><span class="p">,</span><span class="n">byrow</span><span class="o">=</span><span class="nb">T</span><span class="p">)</span><span class="w">
+  </span><span class="n">offsetseq</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="m">28</span><span class="p">,</span><span class="m">2</span><span class="p">)</span><span class="w">
+  </span><span class="n">n</span><span class="o">=</span><span class="m">0</span><span class="w">
+  </span><span class="n">train.reduceddata.frame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="m">1</span><span class="o">:</span><span class="n">nrow</span><span class="p">(</span><span class="n">data</span><span class="p">))</span><span class="w">
+  </span><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nf">is.null</span><span class="p">(</span><span class="n">data</span><span class="o">$</span><span class="n">label</span><span class="p">))</span><span class="w"> </span><span class="n">train.reduced</span><span class="o">$</span><span class="n">labeldata</span><span class="o">$</span><span class="n">label</span><span class="w">
+  </span><span class="n">data</span><span class="o">$</span><span class="n">labelNULL</span><span class="w">
+  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">offset</span><span class="p">){</span><span class="w">
+    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">j</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">offset</span><span class="p">){</span><span class="w">
+      </span><span class="n">pxas.numeric</span><span class="p">(</span><span class="n">pos</span><span class="p">[</span><span class="n">i</span><span class="o">:</span><span class="p">(</span><span class="n">i</span><span class="m">+1</span><span class="p">),</span><span class="n">j</span><span class="o">:</span><span class="p">(</span><span class="n">j</span><span class="m">+1</span><span class="p">)])</span><span class="w">
+      </span><span class="n">pxapply</span><span class="p">(</span><span class="n">data</span><span class="p">[,</span><span class="n">px</span><span class="p">],</span><span class="m">1</span><span class="p">,</span><span class="n">max</span><span class="p">)</span><span class="w">
+      </span><span class="n">indexpaste0</span><span class="p">(</span><span class="s1">'px'</span><span class="p">,</span><span class="n">n</span><span class="p">)</span><span class="w">
+      </span><span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="m">+1</span><span class="w">
+      </span><span class="n">train.reduced</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="n">px</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+  </span><span class="n">train.reduced</span><span class="o">$</span><span class="n">indexNULL</span><span class="w">
+  </span><span class="n">return</span><span class="w"> </span><span class="p">(</span><span class="n">train.reduced</span><span class="p">)</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span><span class="n">train.reduced</span><span class="o">=</span><span class="n">reduceDim</span><span class="p">(</span><span class="n">train</span><span class="p">)</span><span class="w">
+</span><span class="n">test.reduced</span><span class="o">=</span><span class="n">reduceDim</span><span class="p">(</span><span class="n">test</span><span class="p">)</span><span class="w">
+
+</span></code></pre>
+</div>
+
+<p>Let’s take a look at the digit images after dimension reduction.</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">display</span><span class="p">(</span><span class="n">test.reduced</span><span class="p">[</span><span class="n">sample</span><span class="p">(</span><span class="m">28000</span><span class="p">,</span><span class="m">100</span><span class="p">),],</span><span class="m">14</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<p><img class="wp-image-82 size-full" src="https://6chaoran.files.wordpress.com/2015/07/unnamed-chunk-3-1.png" alt="14x14 visualization" width="504" height="504" /> 
+14x14 visualization</p>
+
+<p>The digit is still well recognizable!</p>
+<h2>Dimension Reduction 2:</h2>
+<p>Besides the manual dimension reduction done earlier, we have a smarter alogrithm call ‘Principle Component Analysis’ (PCA).
+PCA is a method to compress the data and projected to n component axis. This comression and recovery process will incur some information loss, which is expressed the variance retained. In this case, we set the variance retrained to be 90%.</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">library</span><span class="p">(</span><span class="n">caret</span><span class="p">)</span><span class="w">
+</span><span class="n">pcapreProcess</span><span class="p">(</span><span class="n">rbind</span><span class="p">(</span><span class="n">train.reduced</span><span class="p">,</span><span class="n">test.reduced</span><span class="p">),</span><span class="n">method</span><span class="o">=</span><span class="s1">'pca'</span><span class="p">,</span><span class="n">thresh</span><span class="o">=</span><span class="m">0.9</span><span class="p">)</span><span class="w">
+</span><span class="n">train.pcapredict</span><span class="p">(</span><span class="n">pca</span><span class="p">,</span><span class="n">train.reduced</span><span class="p">)</span><span class="w">
+</span><span class="n">test.pcapredict</span><span class="p">(</span><span class="n">pca</span><span class="p">,</span><span class="n">test.reduced</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<pre><code>## 
+## Call:
+## preProcess.default(x = rbind(train.reduced, test.reduced), method =
+##  "pca", thresh = 0.9)
+## 
+## Created from 70000 samples and 101 variables
+## Pre-processing: principal component signal extraction, scaled, centered 
+## 
+## PCA needed 47 components to capture 90 percent of the variance.</code></pre>
+<p>With PCA implemented, we reduced the number of features to 47!</p>
+<h2>Train with Linear SVM:</h2>
+<p>For illustration purpose, we only trained 500 data points.</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">ctrltrainControl</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">'cv'</span><span class="p">,</span><span class="n">number</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">10</span><span class="p">)</span><span class="w">
+</span><span class="n">inTrain</span><span class="o">=</span><span class="n">sample</span><span class="p">(</span><span class="m">42000</span><span class="p">,</span><span class="m">500</span><span class="p">)</span><span class="w">
+</span><span class="n">run_timesystem.time</span><span class="p">(</span><span class="n">fittrain</span><span class="p">(</span><span class="n">factor</span><span class="p">(</span><span class="n">label</span><span class="p">[</span><span class="n">inTrain</span><span class="p">])</span><span class="o">~</span><span class="n">.</span><span class="p">,</span><span class="n">data</span><span class="o">=</span><span class="n">train.pca</span><span class="p">[</span><span class="n">inTrain</span><span class="p">,],</span><span class="w">
+            </span><span class="n">trControl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ctrl</span><span class="p">,</span><span class="w">
+            </span><span class="n">method</span><span class="o">=</span><span class="s1">'svmLinear'</span><span class="p">))</span><span class="w">
+</span><span class="n">print</span><span class="w"> </span><span class="p">(</span><span class="n">fit</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<pre><code>## Support Vector Machines with Linear Kernel 
+## 
+## 500 samples
+##  46 predictor
+##  10 classes: '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (10 fold) 
+## 
+## Summary of sample sizes: 449, 452, 449, 449, 451, 450, ... 
+## 
+## Resampling results
+## 
+##   Accuracy   Kappa     Accuracy SD  Kappa SD  
+##   0.8219855  0.801539  0.03704343   0.04130649
+## 
+## Tuning parameter 'C' was held constant at a value of 1
+## 
+</code></pre>
+<h2>Summary:</h2>
+<p>Simple linear SVM is giving fairely good accuracy with only small part of the entire training data.
+Further Explore Area:</p>
+<ol>
+  <li>Increase PCA threshold</li>
+  <li>Using higher order SVM / Gaussian Kernel SVM or Neural Network/Random Forest</li>
+  <li>Train with more data</li>
+</ol>
+
+<p>The completed R code is available <a href="https://github.com/6chaoran/kaggle/blob/master/digit-recognizer/digit-recognize.R" target="_blank">here</a>.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fa fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="http://localhost:4000/tags/#pca" class="page__taxonomy-item" rel="tag">PCA</a><span class="sep">, </span>
+    
+      
+      
+      <a href="http://localhost:4000/tags/#svm" class="page__taxonomy-item" rel="tag">SVM</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fa fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="http://localhost:4000/categories/#kaggle" class="page__taxonomy-item" rel="tag">kaggle</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> Updated:</strong> <time datetime="2015-07-31T06:16:01+08:00">July 30, 2015</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=[kaggle] Recognize the Digits http://localhost:4000/kaggle-digit-recogition/" class="btn btn--twitter" title="Share on Twitter"><i class="fa fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/kaggle-digit-recogition/" class="btn btn--facebook" title="Share on Facebook"><i class="fa fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=http://localhost:4000/kaggle-digit-recogition/" class="btn btn--google-plus" title="Share on Google Plus"><i class="fa fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://localhost:4000/kaggle-digit-recogition/" class="btn btn--linkedin" title="Share on LinkedIn"><i class="fa fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="http://localhost:4000/spatial-viz-ggmap/" class="pagination--pager" title="[vis] Spatial Visualization with ggmap R package
+">Previous</a>
+    
+    
+      <a href="http://localhost:4000/get-started-tableau/" class="pagination--pager" title="[vis] Getting Started With Tableau
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+    
+    
+    
+      <li><a href="http://github.com/6chaoran"><i class="fa fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+    
+    
+    
+    <li><a href="http://localhost:4000/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2017 Chaoran Liu. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    <script src="http://localhost:4000/assets/js/main.min.js"></script>
+
+
+
+
+
+  </body>
+</html>

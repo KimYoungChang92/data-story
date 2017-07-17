@@ -1,0 +1,794 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.4.2 by Michael Rose
+  Copyright 2017 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE.txt
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin SEO -->
+
+
+
+
+
+
+
+
+
+<title>[spark] Revisit Titanic Data using Apache Spark - Chaoran’s Data Story</title>
+
+
+
+
+<meta name="description" content="This post is mainly to demonstrate the pyspark API (Spark 1.6.1), using Titanic dataset, which can be found here (train.csv, test.csv). Another post analysing the same dataset using R can be found here.">
+
+
+
+
+<meta name="author" content="Chaoran Liu">
+
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="Chaoran's Data Story">
+<meta property="og:title" content="[spark] Revisit Titanic Data using Apache Spark">
+
+
+  <link rel="canonical" href="http://localhost:4000/titanic-spark-tutorial/">
+  <meta property="og:url" content="http://localhost:4000/titanic-spark-tutorial/">
+
+
+
+  <meta property="og:description" content="This post is mainly to demonstrate the pyspark API (Spark 1.6.1), using Titanic dataset, which can be found here (train.csv, test.csv). Another post analysing the same dataset using R can be found here.">
+
+
+
+
+
+  
+
+  
+
+
+
+
+
+  <meta property="og:type" content="article">
+  <meta property="article:published_time" content="2016-08-13T16:16:01+08:00">
+
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context" : "http://schema.org",
+      "@type" : "Person",
+      "name" : "Chaoran Liu",
+      "url" : "http://localhost:4000",
+      "sameAs" : null
+    }
+  </script>
+
+
+
+
+
+
+<!-- end SEO -->
+
+
+<link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="Chaoran's Data Story Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://localhost:4000/assets/css/main.css">
+
+<!--[if lte IE 9]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+<meta http-equiv="cleartype" content="on">
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use http://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+  </head>
+
+  <body class="layout--single">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+    <div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <a class="site-title" href="http://localhost:4000/">Chaoran's Data Story</a>
+        <ul class="visible-links">
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/about/">About</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/year-archive/">Posts</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/categories/">Categories</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/tags/">Tags</a></li>
+          
+        </ul>
+        <button><div class="navicon"></div></button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="https://rawgit.com/6chaoran/DataStory/master/profile_pic.jpg" alt="Chaoran Liu" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name" itemprop="name">Chaoran Liu</h3>
+    
+      <p class="author__bio" itemprop="description">
+        data science enthusiast
+      </p>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="http://schema.org/Place">
+          <i class="fa fa-fw fa-map-marker" aria-hidden="true"></i> <span itemprop="name">Singapore</span>
+        </li>
+      
+
+      
+
+      
+        <li>
+          <a href="mailto:chaoran.liu@icloud.com">
+            <meta itemprop="email" content="chaoran.liu@icloud.com" />
+            <i class="fa fa-fw fa-envelope-square" aria-hidden="true"></i> Email
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+        <li>
+          <a href="https://www.linkedin.com/in/liuchaoran" itemprop="sameAs">
+            <i class="fa fa-fw fa-linkedin-square" aria-hidden="true"></i> LinkedIn
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+        <li>
+          <a href="https://github.com/6chaoran" itemprop="sameAs">
+            <i class="fa fa-fw fa-github" aria-hidden="true"></i> GitHub
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs">
+      <i class="fa fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="[spark] Revisit Titanic Data using Apache Spark">
+    <meta itemprop="description" content="This post is mainly to demonstrate the pyspark API (Spark 1.6.1), using Titanic dataset, which can be found here (train.csv, test.csv). Another post analysing the same dataset using R can be found here.">
+    <meta itemprop="datePublished" content="August 13, 2016">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 class="page__title" itemprop="headline">[spark] Revisit Titanic Data using Apache Spark
+</h1>
+          
+            <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+
+
+  5 minute read
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        <p>This post is mainly to demonstrate the pyspark API (Spark 1.6.1), using Titanic dataset, which can be found here (<a href="https://raw.githubusercontent.com/6chaoran/DataStory/master/Titanic-Spark/train.csv">train.csv</a>, <a href="https://raw.githubusercontent.com/6chaoran/DataStory/master/Titanic-Spark/test.csv">test.csv</a>). Another post analysing the same dataset using R can be found <a href="https://6chaoran.wordpress.com/2015/07/19/kaggle-titanic/">here</a>.</p>
+
+<h3 id="content">Content</h3>
+
+<ol>
+  <li>Data Loading and Parsing</li>
+  <li>Data Manipulation</li>
+  <li>Feature Engineering</li>
+  <li>Apply Spark ml/mllib models</li>
+</ol>
+
+<h3 id="1-data-loading--parsing">1. data loading &amp; parsing</h3>
+
+<h4 id="data-loading">data loading</h4>
+
+<p><code class="highlighter-rouge">sc</code> is the <code class="highlighter-rouge">SparkContext</code> launched together with pyspark. Using <code class="highlighter-rouge">sc.textFile</code>, we can read csv file as text in RDD data format and data is separated by comma.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">train_path</span><span class="o">=</span><span class="s">'/Users/chaoranliu/Desktop/github/kaggle/titanic/train.csv'</span>
+<span class="n">test_path</span><span class="o">=</span><span class="s">'/Users/chaoranliu/Desktop/github/kaggle/titanic/test.csv'</span>
+<span class="c"># Load csv file as RDD</span>
+<span class="n">train_rdd</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">textFile</span><span class="p">(</span><span class="n">train_path</span><span class="p">)</span>
+<span class="n">test_rdd</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">textFile</span><span class="p">(</span><span class="n">test_path</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>Let’s look at the first 3 rows of the data in RDD.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">train_rdd</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[u'PassengerId,Survived,Pclass,Name,Sex,Age,SibSp,Parch,Ticket,Fare,Cabin,Embarked',
+
+ u'1,0,3,"Braund, Mr. Owen Harris",male,22,1,0,A/5 21171,7.25,,S',
+
+ u'2,1,1,"Cumings, Mrs. John Bradley (Florence Briggs Thayer)",female,38,1,0,PC 17599,71.2833,C85,C']
+
+</code></pre>
+</div>
+
+<h4 id="parse-rdd-to-dataframe">parse RDD to DataFrame</h4>
+
+<p>Inspired from R DataFrame and Python pandas, Spark DataFrame is the newer data format supported by Spark. We are going to transform RDD to DataFrame for later data manipulation.</p>
+
+<p>steps to transform RDD to DataFrame:</p>
+
+<ol>
+  <li>remove header from data</li>
+  <li>separate each row by comma and convert to tuple</li>
+  <li>names each column by the header</li>
+</ol>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># Parse RDD to DF</span>
+<span class="k">def</span> <span class="nf">parseTrain</span><span class="p">(</span><span class="n">rdd</span><span class="p">):</span>
+ 
+    <span class="c"># extract data header (first row)</span>
+    <span class="n">header</span> <span class="o">=</span> <span class="n">rdd</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+    <span class="c"># remove header</span>
+    <span class="n">body</span> <span class="o">=</span> <span class="n">rdd</span><span class="o">.</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="n">r</span><span class="o">!=</span><span class="n">header</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">parseRow</span><span class="p">(</span><span class="n">row</span><span class="p">):</span>
+        <span class="c"># a function to parse each text row into</span>
+        <span class="c"># data format</span>
+        <span class="c"># remove double quote, split the text row by comma</span>
+        <span class="n">row_list</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">''</span><span class="p">,</span><span class="s">''</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(,)</span>
+        <span class="c"># convert python list to tuple, which is</span>
+        <span class="c"># compatible with pyspark data structure</span>
+        <span class="n">row_tuple</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">row_list</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">row_tuple</span>
+ 
+    <span class="n">rdd_parsed</span> <span class="o">=</span> <span class="n">body</span><span class="o">.</span><span class="nb">map</span><span class="p">(</span><span class="n">parseRow</span><span class="p">)</span>
+ 
+    <span class="n">colnames</span> <span class="o">=</span> <span class="n">header</span><span class="o">.</span><span class="n">split</span><span class="p">(,)</span>
+    <span class="n">colnames</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="s">'FirstName'</span><span class="p">)</span>
+ 
+    <span class="k">return</span> <span class="n">rdd_parsed</span><span class="o">.</span><span class="n">toDF</span><span class="p">(</span><span class="n">colnames</span><span class="p">)</span>
+ 
+<span class="k">def</span> <span class="nf">parseTest</span><span class="p">(</span><span class="n">rdd</span><span class="p">):</span>
+    <span class="n">header</span> <span class="o">=</span> <span class="n">rdd</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+    <span class="n">body</span> <span class="o">=</span> <span class="n">rdd</span><span class="o">.</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="n">r</span><span class="o">!=</span><span class="n">header</span><span class="p">)</span>
+ 
+    <span class="k">def</span> <span class="nf">parseRow</span><span class="p">(</span><span class="n">row</span><span class="p">):</span>
+        <span class="n">row_list</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">''</span><span class="p">,</span><span class="s">''</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(,)</span>
+        <span class="n">row_tuple</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">row_list</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">row_tuple</span>
+ 
+    <span class="n">rdd_parsed</span> <span class="o">=</span> <span class="n">body</span><span class="o">.</span><span class="nb">map</span><span class="p">(</span><span class="n">parseRow</span><span class="p">)</span>
+ 
+    <span class="n">colnames</span> <span class="o">=</span> <span class="n">header</span><span class="o">.</span><span class="n">split</span><span class="p">(,)</span>
+    <span class="n">colnames</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="s">'FirstName'</span><span class="p">)</span>
+ 
+    <span class="k">return</span> <span class="n">rdd_parsed</span><span class="o">.</span><span class="n">toDF</span><span class="p">(</span><span class="n">colnames</span><span class="p">)</span>
+ 
+<span class="n">train_df</span> <span class="o">=</span> <span class="n">parseTrain</span><span class="p">(</span><span class="n">train_rdd</span><span class="p">)</span>
+<span class="n">test_df</span> <span class="o">=</span> <span class="n">parseTest</span><span class="p">(</span><span class="n">test_rdd</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>Now let’s take a look at the DataFrame</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">train_df</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>+-----------+--------+------+---------+--------------------+------+---+-----+-----+----------------+-------+-----+--------+
+|PassengerId|Survived|Pclass|FirstName|                Name|   Sex|Age|SibSp|Parch|          Ticket|   Fare|Cabin|Embarked|
++-----------+--------+------+---------+--------------------+------+---+-----+-----+----------------+-------+-----+--------+
+|          1|       0|     3|   Braund|     Mr. Owen Harris|  male| 22|    1|    0|       A/5 21171|   7.25|     |       S|
+|          2|       1|     1|  Cumings| Mrs. John Bradle...|female| 38|    1|    0|        PC 17599|71.2833|  C85|       C|
+|          3|       1|     3|Heikkinen|         Miss. Laina|female| 26|    0|    0|STON/O2. 3101282|  7.925|     |       S|
++-----------+--------+------+---------+--------------------+------+---+-----+-----+----------------+-------+-----+--------+
+</code></pre>
+</div>
+
+<p>Combine Train/Test Data</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c">## Add Survived column to test</span>
+<span class="kn">from</span> <span class="nn">pyspark.sql.functions</span> <span class="kn">import</span> <span class="n">lit</span><span class="p">,</span> <span class="n">col</span>
+<span class="n">train_df</span> <span class="o">=</span> <span class="n">train_df</span><span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="s">'Mark'</span><span class="p">,</span><span class="n">lit</span><span class="p">(</span><span class="s">'train'</span><span class="p">))</span>
+<span class="n">test_df</span> <span class="o">=</span> <span class="p">(</span><span class="n">test_df</span><span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="s">'Survived'</span><span class="p">,</span><span class="n">lit</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+                  <span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="s">'Mark'</span><span class="p">,</span><span class="n">lit</span><span class="p">(</span><span class="s">'test'</span><span class="p">)))</span>
+<span class="n">test_df</span> <span class="o">=</span> <span class="n">test_df</span><span class="p">[</span><span class="n">train_df</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+<span class="c">## Append Test data to Train data</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">train_df</span><span class="o">.</span><span class="n">unionAll</span><span class="p">(</span><span class="n">test_df</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<h3 id="2-data-cleaning--manipulation">2. data cleaning &amp; manipulation</h3>
+
+<h4 id="convert-age-sibsp-parch-fare-to-numeric">Convert Age, SibSp, Parch, Fare to Numeric</h4>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">df</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="s">'Age'</span><span class="p">,</span><span class="n">df</span><span class="p">[</span><span class="s">'Age'</span><span class="p">]</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">double</span><span class="p">))</span>
+            <span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="s">'SibSp'</span><span class="p">,</span><span class="n">df</span><span class="p">[</span><span class="s">'SibSp'</span><span class="p">]</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">double</span><span class="p">))</span>
+            <span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="s">'Parch'</span><span class="p">,</span><span class="n">df</span><span class="p">[</span><span class="s">'Parch'</span><span class="p">]</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">double</span><span class="p">))</span>
+            <span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="s">'Fare'</span><span class="p">,</span><span class="n">df</span><span class="p">[</span><span class="s">'Fare'</span><span class="p">]</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">double</span><span class="p">))</span>
+            <span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="s">'Survived'</span><span class="p">,</span><span class="n">df</span><span class="p">[</span><span class="s">'Survived'</span><span class="p">]</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">double</span><span class="p">))</span>
+            <span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">printSchema</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>root
+ |-- PassengerId: string (nullable = true)
+ |-- Survived: double (nullable = true)
+ |-- Pclass: string (nullable = true)
+ |-- FirstName: string (nullable = true)
+ |-- Name: string (nullable = true)
+ |-- Sex: string (nullable = true)
+ |-- Age: double (nullable = true)
+ |-- SibSp: double (nullable = true)
+ |-- Parch: double (nullable = true)
+ |-- Ticket: string (nullable = true)
+ |-- Fare: double (nullable = true)
+ |-- Cabin: string (nullable = true)
+ |-- Embarked: string (nullable = true)
+ |-- Mark: string (nullable = false)
+</code></pre>
+</div>
+
+<h4 id="impute-missing-age-and-fare-with-average">impute missing Age and Fare with Average</h4>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code>
+<span class="n">numVars</span> <span class="o">=</span> <span class="p">[</span><span class="s">'Survived'</span><span class="p">,</span><span class="s">'Age'</span><span class="p">,</span><span class="s">'SibSp'</span><span class="p">,</span><span class="s">'Parch'</span><span class="p">,</span><span class="s">'Fare'</span><span class="p">]</span>
+<span class="k">def</span> <span class="nf">countNull</span><span class="p">(</span><span class="n">df</span><span class="p">,</span><span class="n">var</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">var</span><span class="p">]</span><span class="o">.</span><span class="n">isNull</span><span class="p">())</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+ 
+<span class="n">missing</span> <span class="o">=</span> <span class="p">{</span><span class="n">var</span><span class="p">:</span> <span class="n">countNull</span><span class="p">(</span><span class="n">df</span><span class="p">,</span><span class="n">var</span><span class="p">)</span> <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">numVars</span><span class="p">}</span>
+<span class="n">age_mean</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupBy</span><span class="p">()</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="s">'Age'</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">fare_mean</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupBy</span><span class="p">()</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="s">'Fare'</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">na</span><span class="o">.</span><span class="n">fill</span><span class="p">({</span><span class="s">'Age'</span><span class="p">:</span><span class="n">age_mean</span><span class="p">,</span><span class="s">'Fare'</span><span class="p">:</span><span class="n">fare_mean</span><span class="p">})</span>
+
+</code></pre>
+</div>
+
+<p>missing Age, Fare are filled with the average value.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="err">'Age':</span><span class="w"> </span><span class="err">263,</span><span class="w"> </span><span class="err">'Fare':</span><span class="w"> </span><span class="err">1,</span><span class="w"> </span><span class="err">'Parch':</span><span class="w"> </span><span class="err">0,</span><span class="w"> </span><span class="err">'SibSp':</span><span class="w"> </span><span class="err">0,</span><span class="w"> </span><span class="err">'Survived':</span><span class="w"> </span><span class="err">0</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<h3 id="3-feature-engineering">3. feature engineering</h3>
+
+<h4 id="a-extract-title-from-name">a. extract title from name</h4>
+
+<p>The idea is to create user-defined-function (udf) map on column “Name”.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">pyspark.sql.functions</span> <span class="kn">import</span> <span class="n">udf</span>
+<span class="kn">from</span> <span class="nn">pyspark.sql.types</span> <span class="kn">import</span> <span class="n">StringType</span>
+ 
+<span class="c">## created user defined function to extract title</span>
+<span class="n">getTitle</span> <span class="o">=</span> <span class="n">udf</span><span class="p">(</span><span class="k">lambda</span> <span class="n">name</span><span class="p">:</span> <span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">'.'</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span><span class="n">StringType</span><span class="p">())</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">withColumn</span><span class="p">(</span><span class="s">'Title'</span><span class="p">,</span> <span class="n">getTitle</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s">'Name'</span><span class="p">]))</span>
+ 
+<span class="n">df</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s">'Name'</span><span class="p">,</span><span class="s">'Title'</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>+--------------------+-----+
+|                Name|Title|
++--------------------+-----+
+|     Mr. Owen Harris|   Mr|
+| Mrs. John Bradle...|  Mrs|
+|         Miss. Laina| Miss|
++--------------------+-----+
+only showing top 3 rows
+</code></pre>
+</div>
+
+<h4 id="b-index-categorical-variable">b. index categorical variable</h4>
+
+<p>Categorical feature is normally converted to numeric variable before apply machine learning algorithms. Here I just simply index the categories, which may not be the best for the conversion, as an unexpected correlation may be introduced in this method.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">catVars</span> <span class="o">=</span> <span class="p">[</span><span class="s">'Pclass'</span><span class="p">,</span><span class="s">'Sex'</span><span class="p">,</span><span class="s">'Embarked'</span><span class="p">,</span><span class="s">'Title'</span><span class="p">]</span>
+ 
+<span class="c">## index Sex variable</span>
+<span class="kn">from</span> <span class="nn">pyspark.ml.feature</span> <span class="kn">import</span> <span class="n">StringIndexer</span>
+<span class="n">si</span> <span class="o">=</span> <span class="n">StringIndexer</span><span class="p">(</span><span class="n">inputCol</span> <span class="o">=</span> <span class="s">'Sex'</span><span class="p">,</span> <span class="n">outputCol</span> <span class="o">=</span> <span class="s">'Sex_indexed'</span><span class="p">)</span>
+<span class="n">df_indexed</span> <span class="o">=</span> <span class="n">si</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s">'Sex'</span><span class="p">)</span><span class="o">.</span><span class="n">withColumnRenamed</span><span class="p">(</span><span class="s">'Sex_indexed'</span><span class="p">,</span><span class="s">'Sex'</span><span class="p">)</span>
+ 
+<span class="c">## make use of pipeline to index all categorical variables</span>
+<span class="k">def</span> <span class="nf">indexer</span><span class="p">(</span><span class="n">df</span><span class="p">,</span><span class="n">col</span><span class="p">):</span>
+    <span class="n">si</span> <span class="o">=</span> <span class="n">StringIndexer</span><span class="p">(</span><span class="n">inputCol</span> <span class="o">=</span> <span class="n">col</span><span class="p">,</span> <span class="n">outputCol</span> <span class="o">=</span> <span class="n">col</span><span class="o">+</span><span class="s">'_indexed'</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">si</span>
+ 
+<span class="n">indexers</span> <span class="o">=</span> <span class="p">[</span><span class="n">indexer</span><span class="p">(</span><span class="n">df</span><span class="p">,</span><span class="n">col</span><span class="p">)</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">catVars</span><span class="p">]</span>
+ 
+<span class="kn">from</span> <span class="nn">pyspark.ml</span> <span class="kn">import</span> <span class="n">Pipeline</span>
+<span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">stages</span> <span class="o">=</span> <span class="n">indexers</span><span class="p">)</span>
+<span class="n">df_indexed</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+ 
+<span class="n">df_indexed</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s">'Embarked'</span><span class="p">,</span><span class="s">'Embarked_indexed'</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>The categorical features are indexed in resulting data. Embarked is mapped S=&gt;0, C=&gt;1, Q=&gt;2.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>+--------+----------------+
+|Embarked|Embarked_indexed|
++--------+----------------+
+|       S|             0.0|
+|       C|             1.0|
+|       S|             0.0|
++--------+----------------+
+only showing top 3 rows
+</code></pre>
+</div>
+
+<h4 id="c-convert-to-labelfeatures-format">c. convert to label/features format</h4>
+
+<p>In order to apply ML/MLLIB, we need covert features to Vectors (either SparseVector or DenseVector).</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code>
+<span class="n">catVarsIndexed</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="s">'_indexed'</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">catVars</span><span class="p">]</span>
+<span class="n">featuresCol</span> <span class="o">=</span> <span class="n">numVars</span><span class="o">+</span><span class="n">catVarsIndexed</span>
+<span class="n">featuresCol</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s">'Survived'</span><span class="p">)</span>
+<span class="n">labelCol</span> <span class="o">=</span> <span class="p">[</span><span class="s">'Mark'</span><span class="p">,</span><span class="s">'Survived'</span><span class="p">]</span>
+ 
+<span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">Row</span>
+<span class="kn">from</span> <span class="nn">pyspark.mllib.linalg</span> <span class="kn">import</span> <span class="n">DenseVector</span>
+<span class="n">row</span> <span class="o">=</span> <span class="n">Row</span><span class="p">(</span><span class="s">'mark'</span><span class="p">,</span><span class="s">'label'</span><span class="p">,</span><span class="s">'features'</span><span class="p">)</span>
+ 
+<span class="n">df_indexed</span> <span class="o">=</span> <span class="n">df_indexed</span><span class="p">[</span><span class="n">labelCol</span><span class="o">+</span><span class="n">featuresCol</span><span class="p">]</span>
+<span class="c"># 0-mark, 1-label, 2-features</span>
+<span class="c"># map features to DenseVector</span>
+<span class="n">lf</span> <span class="o">=</span> <span class="n">df_indexed</span><span class="o">.</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="p">(</span><span class="n">row</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">r</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">DenseVector</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="mi">2</span><span class="p">:]))))</span><span class="o">.</span><span class="n">toDF</span><span class="p">()</span>
+<span class="c"># index label</span>
+<span class="c"># convert numeric label to categorical, which is required by</span>
+<span class="c"># decisionTree and randomForest</span>
+<span class="n">lf</span> <span class="o">=</span> <span class="n">StringIndexer</span><span class="p">(</span><span class="n">inputCol</span> <span class="o">=</span> <span class="s">'label'</span><span class="p">,</span><span class="n">outputCol</span><span class="o">=</span><span class="s">'index'</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">lf</span><span class="p">)</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">lf</span><span class="p">)</span>
+ 
+<span class="n">lf</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>+-----+-----+--------------------+-----+
+| mark|label|            features|index|
++-----+-----+--------------------+-----+
+|train|  0.0|[22.0,1.0,0.0,7.2...|  0.0|
+|train|  1.0|[38.0,1.0,0.0,71....|  1.0|
+|train|  1.0|[26.0,0.0,0.0,7.9...|  1.0|
++-----+-----+--------------------+-----+
+only showing top 3 rows
+</code></pre>
+</div>
+
+<h4 id="split-back-to-traintest-data">split back to train/test data</h4>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">train</span> <span class="o">=</span> <span class="n">lf</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">lf</span><span class="o">.</span><span class="n">mark</span> <span class="o">==</span><span class="s">'train'</span><span class="p">)</span>
+<span class="n">test</span> <span class="o">=</span> <span class="n">lf</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">lf</span><span class="o">.</span><span class="n">mark</span> <span class="o">==</span><span class="s">'test'</span><span class="p">)</span>
+ 
+<span class="c"># random split further to get train/validate</span>
+<span class="n">train</span><span class="p">,</span><span class="n">validate</span> <span class="o">=</span> <span class="n">train</span><span class="o">.</span><span class="n">randomSplit</span><span class="p">([</span><span class="mf">0.7</span><span class="p">,</span><span class="mf">0.3</span><span class="p">],</span><span class="n">seed</span> <span class="o">=</span><span class="mi">121</span><span class="p">)</span>
+ 
+<span class="k">print</span> <span class="s">'Train Data Number of Row: '</span><span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">train</span><span class="o">.</span><span class="n">count</span><span class="p">())</span>
+<span class="k">print</span> <span class="s">'Validate Data Number of Row: '</span><span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">validate</span><span class="o">.</span><span class="n">count</span><span class="p">())</span>
+<span class="k">print</span> <span class="s">'Test Data Number of Row: '</span><span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">test</span><span class="o">.</span><span class="n">count</span><span class="p">())</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Train Data Number of Row: 636
+Validate Data Number of Row: 255
+Test Data Number of Row: 418
+</code></pre>
+</div>
+
+<h3 id="4-apply-models-from-mlmllib">4. apply models from ml/mllib</h3>
+
+<p><code class="highlighter-rouge">ml</code> is built based on DataFrame, while <code class="highlighter-rouge">mllib</code> is based on RDD. <br />
+I’m going to fit the logistic, decision tree and random forest models from <code class="highlighter-rouge">ml</code> packages.</p>
+
+<h4 id="logistic-regression">logistic regression</h4>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code>
+<span class="kn">from</span> <span class="nn">pyspark.ml.classification</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+ 
+<span class="c"># regPara: lasso regularisation parameter (L1)</span>
+<span class="n">lr</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">maxIter</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="n">regParam</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">,</span> <span class="n">labelCol</span><span class="o">=</span><span class="s">'index'</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train</span><span class="p">)</span>
+ 
+<span class="c"># Evaluate model based on auc ROC(default for binary classification)</span>
+<span class="kn">from</span> <span class="nn">pyspark.ml.evaluation</span> <span class="kn">import</span> <span class="n">BinaryClassificationEvaluator</span>
+ 
+<span class="k">def</span> <span class="nf">testModel</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">validate</span> <span class="o">=</span> <span class="n">validate</span><span class="p">):</span>
+    <span class="n">pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">validate</span><span class="p">)</span>
+    <span class="n">evaluator</span> <span class="o">=</span> <span class="n">BinaryClassificationEvaluator</span><span class="p">(</span><span class="n">labelCol</span> <span class="o">=</span> <span class="s">'index'</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">evaluator</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">prod</span><span class="p">)</span>
+ 
+<span class="k">print</span> <span class="s">'AUC ROC of Logistic Regression model is: '</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">testModel</span><span class="p">(</span><span class="n">lr</span><span class="p">))</span>
+
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>'AUC ROC of Logistic Regression model is: 0.836952368823'
+</code></pre>
+</div>
+
+<p>Logistic Regression model has a ROC 0.837 and we will compare the score with decision tree and random Forest.</p>
+
+<h4 id="decision-tree-to-random-forest">decision tree to random forest</h4>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">pyspark.ml.classification</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span><span class="p">,</span> <span class="n">RandomForestClassifier</span>
+ 
+<span class="n">dt</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">maxDepth</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">labelCol</span> <span class="o">=</span><span class="s">'index'</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train</span><span class="p">)</span>
+<span class="n">rf</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">numTrees</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="n">labelCol</span> <span class="o">=</span> <span class="s">'index'</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train</span><span class="p">)</span>
+ 
+<span class="n">models</span> <span class="o">=</span> <span class="p">{</span><span class="s">'LogisticRegression'</span><span class="p">:</span><span class="n">lr</span><span class="p">,</span>
+          <span class="s">'DecistionTree'</span><span class="p">:</span><span class="n">dt</span><span class="p">,</span>
+          <span class="s">'RandomForest'</span><span class="p">:</span><span class="n">rf</span><span class="p">}</span>
+ 
+<span class="n">modelPerf</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span><span class="n">testModel</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">models</span><span class="o">.</span><span class="n">iteritems</span><span class="p">()}</span>
+ 
+<span class="k">print</span> <span class="n">modelPerf</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="err">'DecistionTree':</span><span class="w"> </span><span class="err">0.7700267447784003,</span><span class="w">
+ </span><span class="err">'LogisticRegression':</span><span class="w"> </span><span class="err">0.8369523688232298,</span><span class="w">
+ </span><span class="err">'RandomForest':</span><span class="w"> </span><span class="err">0.8597809475292919</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>Without model tuning, random forest looks good for the prediction.</p>
+
+<p>The full python code can be found <a href="https://github.com/6chaoran/DataStory/blob/master/Titanic-Spark/pyspark-script.py">here</a></p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fa fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="http://localhost:4000/tags/#python" class="page__taxonomy-item" rel="tag">python</a><span class="sep">, </span>
+    
+      
+      
+      <a href="http://localhost:4000/tags/#spark" class="page__taxonomy-item" rel="tag">spark</a><span class="sep">, </span>
+    
+      
+      
+      <a href="http://localhost:4000/tags/#titanic" class="page__taxonomy-item" rel="tag">titanic</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fa fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="http://localhost:4000/categories/#spark" class="page__taxonomy-item" rel="tag">spark</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> Updated:</strong> <time datetime="2016-08-13T16:16:01+08:00">August 13, 2016</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=[spark] Revisit Titanic Data using Apache Spark http://localhost:4000/titanic-spark-tutorial/" class="btn btn--twitter" title="Share on Twitter"><i class="fa fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/titanic-spark-tutorial/" class="btn btn--facebook" title="Share on Facebook"><i class="fa fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=http://localhost:4000/titanic-spark-tutorial/" class="btn btn--google-plus" title="Share on Google Plus"><i class="fa fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://localhost:4000/titanic-spark-tutorial/" class="btn btn--linkedin" title="Share on LinkedIn"><i class="fa fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="http://localhost:4000/tableau-intersection-filter/" class="pagination--pager" title="[vis] Tableau Intersection Filter Tutorial
+">Previous</a>
+    
+    
+      <a href="http://localhost:4000/model-based-recsys-r/" class="pagination--pager" title="[RecSys] Implementation of Model Based Recommendation System in R
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+    
+    
+    
+      <li><a href="http://github.com/6chaoran"><i class="fa fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+    
+    
+    
+    <li><a href="http://localhost:4000/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2017 Chaoran Liu. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    <script src="http://localhost:4000/assets/js/main.min.js"></script>
+
+
+
+
+
+  </body>
+</html>

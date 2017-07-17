@@ -1,0 +1,586 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.4.2 by Michael Rose
+  Copyright 2017 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE.txt
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin SEO -->
+
+
+
+
+
+
+
+
+
+<title>[vis] Spatial Visualization with ggmap R package - Chaoran’s Data Story</title>
+
+
+
+
+<meta name="description" content="ggmap, which is an R package built to visualize with map, is very similar to ggplot2. And its output is ‘ggplot’ class, which means it also support layered visualization just like ggplot2. I will demonstrate with two examples “Crimes in San Fransisco” and “Taxi in Porto”. The data of both examples are taken from kaggle.">
+
+
+
+
+<meta name="author" content="Chaoran Liu">
+
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="Chaoran's Data Story">
+<meta property="og:title" content="[vis] Spatial Visualization with ggmap R package">
+
+
+  <link rel="canonical" href="http://localhost:4000/spatial-viz-ggmap/">
+  <meta property="og:url" content="http://localhost:4000/spatial-viz-ggmap/">
+
+
+
+  <meta property="og:description" content="ggmap, which is an R package built to visualize with map, is very similar to ggplot2. And its output is ‘ggplot’ class, which means it also support layered visualization just like ggplot2. I will demonstrate with two examples “Crimes in San Fransisco” and “Taxi in Porto”. The data of both examples are taken from kaggle.">
+
+
+
+
+
+  
+
+  
+
+
+
+
+
+  <meta property="og:type" content="article">
+  <meta property="article:published_time" content="2015-07-24T06:16:01+08:00">
+
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context" : "http://schema.org",
+      "@type" : "Person",
+      "name" : "Chaoran Liu",
+      "url" : "http://localhost:4000",
+      "sameAs" : null
+    }
+  </script>
+
+
+
+
+
+
+<!-- end SEO -->
+
+
+<link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="Chaoran's Data Story Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://localhost:4000/assets/css/main.css">
+
+<!--[if lte IE 9]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+<meta http-equiv="cleartype" content="on">
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use http://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+  </head>
+
+  <body class="layout--single">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+    <div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <a class="site-title" href="http://localhost:4000/">Chaoran's Data Story</a>
+        <ul class="visible-links">
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/about/">About</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/year-archive/">Posts</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/categories/">Categories</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/tags/">Tags</a></li>
+          
+        </ul>
+        <button><div class="navicon"></div></button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="https://rawgit.com/6chaoran/DataStory/master/profile_pic.jpg" alt="Chaoran Liu" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name" itemprop="name">Chaoran Liu</h3>
+    
+      <p class="author__bio" itemprop="description">
+        data science enthusiast
+      </p>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="http://schema.org/Place">
+          <i class="fa fa-fw fa-map-marker" aria-hidden="true"></i> <span itemprop="name">Singapore</span>
+        </li>
+      
+
+      
+
+      
+        <li>
+          <a href="mailto:chaoran.liu@icloud.com">
+            <meta itemprop="email" content="chaoran.liu@icloud.com" />
+            <i class="fa fa-fw fa-envelope-square" aria-hidden="true"></i> Email
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+        <li>
+          <a href="https://www.linkedin.com/in/liuchaoran" itemprop="sameAs">
+            <i class="fa fa-fw fa-linkedin-square" aria-hidden="true"></i> LinkedIn
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+        <li>
+          <a href="https://github.com/6chaoran" itemprop="sameAs">
+            <i class="fa fa-fw fa-github" aria-hidden="true"></i> GitHub
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs">
+      <i class="fa fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="[vis] Spatial Visualization with ggmap R package">
+    <meta itemprop="description" content="ggmap, which is an R package built to visualize with map, is very similar to ggplot2. And its output is ‘ggplot’ class, which means it also support layered visualization just like ggplot2. I will demonstrate with two examples “Crimes in San Fransisco” and “Taxi in Porto”. The data of both examples are taken from kaggle.">
+    <meta itemprop="datePublished" content="July 23, 2015">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 class="page__title" itemprop="headline">[vis] Spatial Visualization with ggmap R package
+</h1>
+          
+            <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        <p><a href="https://cran.r-project.org/web/packages/ggmap/index.html">ggmap</a>, which is an R package built to visualize with map, is very similar to <a href="http://ggplot2.org/">ggplot2</a>. And its output is ‘ggplot’ class, which means it also support layered visualization just like ggplot2. I will demonstrate with two examples “<a href="https://www.kaggle.com/c/sf-crime/data">Crimes in San Fransisco</a>” and “<a href="https://www.kaggle.com/c/pkdd-15-predict-taxi-service-trajectory-i/data">Taxi in Porto</a>”. The data of both examples are taken from kaggle.</p>
+
+<h2 id="some-basics-of-ggmap">some basics of ggmap:</h2>
+<ol>
+  <li>get_map: is the function to download map from source (e.g. google/openstreetmap).</li>
+</ol>
+
+<h2 id="some-parameters-can-play-with">some parameters can play with:</h2>
+<ol>
+  <li>location: the longitude and the latitude coordinates or the geocode (e.g. ‘San Francisco’)</li>
+  <li>maptype: could be ‘terrain’, ‘satellite’, ‘roadmap’, ‘hybrid’ … I usually prefer ‘terrain’.</li>
+  <li>zoom: from 3 (continental level) to 21 (building level). I usually use 10-14 (city level).</li>
+  <li>ggmap: is the function to plot map, can be appended with ggplot geom function to add layer.</li>
+</ol>
+
+<h1 id="crime-in-san-fransisco">Crime in San Fransisco</h1>
+<p><a href="https://www.kaggle.com/c/sf-crime/data">This data set</a> consists of the criminal records of different categories in San Fransisco from 2003 to 2015. Let’s only look at the records in year 2014.</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">head</span><span class="p">(</span><span class="n">data_2014</span><span class="p">[</span><span class="nf">c</span><span class="p">(</span><span class="s1">'Category'</span><span class="p">,</span><span class="s1">'DayOfWeek'</span><span class="p">,</span><span class="s1">'PdDistrict'</span><span class="p">,</span><span class="s1">'X'</span><span class="p">,</span><span class="s1">'Y'</span><span class="p">,</span><span class="s1">'Year'</span><span class="p">)])</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>##            Category DayOfWeek PdDistrict         X        Y Year
+## 27585 LARCENY/THEFT    Sunday    MISSION -122.4356 37.76080 2014
+## 27586 LARCENY/THEFT    Sunday   NORTHERN -122.4336 37.80004 2014
+## 27587 VEHICLE THEFT    Sunday    CENTRAL -122.4128 37.78683 2014
+## 27588       ASSAULT    Sunday   NORTHERN -122.4217 37.77364 2014
+## 27589       ASSAULT    Sunday   NORTHERN -122.4217 37.77364 2014
+## 27590       ASSAULT    Sunday   NORTHERN -122.4217 37.77364 2014
+</code></pre>
+</div>
+
+<p>The most frequent crimes are Larceny, other offences, non-criminal, assault and vehicle theft, among which the other offences and non criminal are maybe not so interesting. Therefore I’m going to plot the top 3 crimes with specific categories, namely Larceny, Assault and Vehicle Theft.</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">Crime</span><span class="o">=</span><span class="n">data.frame</span><span class="p">(</span><span class="n">table</span><span class="p">(</span><span class="n">data_2014</span><span class="o">$</span><span class="n">Category</span><span class="p">))</span><span class="w">
+</span><span class="n">Crime</span><span class="o">=</span><span class="n">Crime</span><span class="p">[</span><span class="n">order</span><span class="p">(</span><span class="n">Crime</span><span class="o">$</span><span class="n">Freq</span><span class="p">,</span><span class="n">decreasing</span><span class="o">=</span><span class="nb">T</span><span class="p">),]</span><span class="w">
+</span><span class="n">head</span><span class="p">(</span><span class="n">Crime</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>##              Var1  Freq
+## 17  LARCENY/THEFT 18901
+## 22 OTHER OFFENSES 10290
+## 21   NON-CRIMINAL  9669
+## 2         ASSAULT  6254
+## 35  VEHICLE THEFT  3564
+## 34      VANDALISM  3538
+</code></pre>
+</div>
+
+<p>Use ggmap to plot the map and use geom_jitter to plot the crimes in San Francisco:</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">library</span><span class="p">(</span><span class="n">ggmap</span><span class="p">)</span><span class="w">
+</span><span class="n">map</span><span class="o">=</span><span class="n">get_map</span><span class="p">(</span><span class="n">location</span><span class="o">=</span><span class="s1">'San Fransico'</span><span class="p">,</span><span class="n">maptype</span><span class="o">=</span><span class="s1">'roadmap'</span><span class="p">,</span><span class="n">zoom</span><span class="o">=</span><span class="m">12</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>## Map from URL : http://maps.googleapis.com/maps/api/staticmap?center=San+Fransico&amp;zoom=12&amp;size=640x640&amp;scale=2&amp;maptype=roadmap&amp;language=en-EN&amp;sensor=false
+</code></pre>
+</div>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">plot_crime</span><span class="o">=</span><span class="n">ggmap</span><span class="p">(</span><span class="n">map</span><span class="p">)</span><span class="o">+</span><span class="n">geom_jitter</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">colour</span><span class="o">=</span><span class="n">Category</span><span class="p">),</span><span class="w">
+  </span><span class="n">data</span><span class="o">=</span><span class="n">data_2014</span><span class="p">[</span><span class="n">data_2014</span><span class="o">$</span><span class="n">Category</span><span class="w"> </span><span class="o">%in%</span><span class="w"> </span><span class="n">Top3</span><span class="p">,],</span><span class="n">alpha</span><span class="o">=</span><span class="m">0.2</span><span class="p">)</span><span class="o">+</span><span class="n">geom_jitter</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">colour</span><span class="o">=</span><span class="n">Category</span><span class="p">),</span><span class="w">
+	</span><span class="n">data</span><span class="o">=</span><span class="n">data0</span><span class="p">[</span><span class="n">data0</span><span class="o">$</span><span class="n">Category</span><span class="w"> </span><span class="o">%in%</span><span class="w"> </span><span class="n">Top3</span><span class="p">,],</span><span class="n">alpha</span><span class="o">=</span><span class="m">1</span><span class="p">)</span><span class="o">+</span><span class="n">labs</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">'Longitude'</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="s1">'Latitude'</span><span class="p">)</span><span class="w">
+</span><span class="n">plot_crime</span><span class="w">
+</span></code></pre>
+</div>
+
+<p><img src="figure/unnamed-chunk-3-1.png" alt="plot of chunk unnamed-chunk-3" /></p>
+
+<h2 id="some-insights">Some Insights:</h2>
+<p>There are much more Larceny/Theft (in green) cases in 2014 than the rest two crimes and most of the cases happened in North Coast. Is it because the place is closer to Alcatraz Island? I guess not. The assault crimes (in red) are mostly clustered near Tenderloin, which is indeed a <a href="https://en.wikipedia.org/wiki/Tenderloin,_San_Francisco">high-crime neighbourhood</a> in San Francisco, quoted from wikipedia. The Vehicle theft crime (in blue) is much less frequent compared with the top 2 and there is no particular worse area.</p>
+
+<h1 id="taxi-in-porto">Taxi in Porto</h1>
+<p><a href="https://www.kaggle.com/c/pkdd-15-predict-taxi-service-trajectory-i/data">This data set</a> contain a collection of location trajectory of the taxis in Porto, which is the 2nd largest city in Portugal. <br />
+Let’s take a overview of the data:</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">head</span><span class="p">(</span><span class="n">test</span><span class="p">[</span><span class="nf">c</span><span class="p">(</span><span class="s1">'TRIP_ID'</span><span class="p">,</span><span class="s1">'TAXI_ID'</span><span class="p">,</span><span class="s1">'TIMESTAMP'</span><span class="p">,</span><span class="s1">'DAY_TYPE'</span><span class="p">,</span><span class="s1">'MISSING_DATA'</span><span class="p">)])</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>##   TRIP_ID  TAXI_ID  TIMESTAMP DAY_TYPE MISSING_DATA
+## 1      T1 20000542 1408039037        A        False
+## 2      T2 20000108 1408038611        A        False
+## 3      T3 20000370 1408038568        A        False
+## 4      T4 20000492 1408039090        A        False
+## 5      T5 20000621 1408039177        A        False
+## 6      T6 20000607 1408037146        A        False
+</code></pre>
+</div>
+
+<p>This is interesting data, but we are not going to use that. We will only use the last column of the data set, which is the POLYLIN (trajectory of the taxi). We define the first location to be pick-up point and the last location to be drop-off point.</p>
+
+<h2 id="pre-processing">Pre-Processing</h2>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">test</span><span class="o">$</span><span class="n">POLYLINE</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>## [1] "[[-8.585676,41.148522],[-8.585712,41.148639],[-8.585685,41.148855],[-8.58573,41.148927],[-8.585982,41.148963],[-8.586396,41.148954],[-8.586072,41.14872],[-8.586324,41.147847],[-8.586999,41.14746],[-8.586576,41.147154],[-8.584884,41.146623]]"
+</code></pre>
+</div>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">getCoord</span><span class="o">=</span><span class="k">function</span><span class="p">(</span><span class="n">x</span><span class="p">){</span><span class="w">
+  </span><span class="n">x</span><span class="o">=</span><span class="n">gsub</span><span class="p">(</span><span class="s1">'[/[]'</span><span class="p">,</span><span class="s1">''</span><span class="p">,</span><span class="n">x</span><span class="p">)</span><span class="w">
+	</span><span class="n">x</span><span class="o">=</span><span class="n">gsub</span><span class="p">(</span><span class="s1">']'</span><span class="p">,</span><span class="s1">''</span><span class="p">,</span><span class="n">x</span><span class="p">)</span><span class="w">
+	</span><span class="n">x</span><span class="o">=</span><span class="n">strsplit</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="s1">','</span><span class="p">)[[</span><span class="m">1</span><span class="p">]]</span><span class="w">
+	</span><span class="n">n</span><span class="o">=</span><span class="nf">length</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w">
+	</span><span class="n">lon</span><span class="o">=</span><span class="nf">as.numeric</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">seq</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="m">2</span><span class="p">)])</span><span class="w">
+	</span><span class="n">lat</span><span class="o">=</span><span class="nf">as.numeric</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">seq</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="m">2</span><span class="p">)])</span><span class="w">
+	</span><span class="n">df</span><span class="o">=</span><span class="n">data.frame</span><span class="p">(</span><span class="n">lon</span><span class="o">=</span><span class="n">lon</span><span class="p">,</span><span class="n">lat</span><span class="o">=</span><span class="n">lat</span><span class="p">)</span><span class="w">
+	</span><span class="n">df</span><span class="o">$</span><span class="n">status</span><span class="o">=</span><span class="s1">'moving'</span><span class="w">
+	</span><span class="n">df</span><span class="o">$</span><span class="n">status</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="o">=</span><span class="s1">'pickup'</span><span class="w">
+	</span><span class="n">df</span><span class="o">$</span><span class="n">status</span><span class="p">[</span><span class="n">nrow</span><span class="p">(</span><span class="n">df</span><span class="p">)]</span><span class="o">=</span><span class="s1">'dropoff'</span><span class="w">
+	</span><span class="nf">return</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>After some pre-processing, we will transform the POLYLINE into a data frame contains series of longitude, latitude, status (pick-up/moving/drop-off).</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">loc</span><span class="o">=</span><span class="kc">NULL</span><span class="w">
+</span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="nf">length</span><span class="p">(</span><span class="n">polyline</span><span class="p">)){</span><span class="w">
+  </span><span class="n">loc</span><span class="o">=</span><span class="n">rbind</span><span class="p">(</span><span class="n">loc</span><span class="p">,</span><span class="n">getCoord</span><span class="p">(</span><span class="n">polyline</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span><span class="n">head</span><span class="p">(</span><span class="n">loc</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>##         lon      lat status
+## 1 -8.585676 41.14852 pickup
+## 2 -8.585712 41.14864 moving
+## 3 -8.585685 41.14885 moving
+## 4 -8.585730 41.14893 moving
+## 5 -8.585982 41.14896 moving
+## 6 -8.586396 41.14895 moving
+</code></pre>
+</div>
+
+<p>Similar we use ggmap to plot the map of Porto with trajectory of taxis overlaid.</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">library</span><span class="p">(</span><span class="n">ggmap</span><span class="p">)</span><span class="w">
+</span><span class="n">map</span><span class="o">=</span><span class="n">get_map</span><span class="p">(</span><span class="n">location</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="n">lon</span><span class="o">=</span><span class="n">median</span><span class="p">(</span><span class="n">loc</span><span class="o">$</span><span class="n">lon</span><span class="p">),</span><span class="n">lat</span><span class="o">=</span><span class="n">median</span><span class="p">(</span><span class="n">loc</span><span class="o">$</span><span class="n">lat</span><span class="p">)),</span><span class="w">
+  </span><span class="n">maptype</span><span class="o">=</span><span class="s1">'roadmap'</span><span class="p">,</span><span class="n">zoom</span><span class="o">=</span><span class="m">13</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>## Map from URL : http://maps.googleapis.com/maps/api/staticmap?center=41.161833,-8.612033&amp;zoom=13&amp;size=640x640&amp;scale=2&amp;maptype=roadmap&amp;language=en-EN&amp;sensor=false
+</code></pre>
+</div>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">plot_taxi</span><span class="o">=</span><span class="n">ggmap</span><span class="p">(</span><span class="n">map</span><span class="p">)</span><span class="o">+</span><span class="n">labs</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">'Longitude'</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="s1">'Latitude'</span><span class="p">)</span><span class="o">+</span><span class="w">
+</span><span class="n">geom_jitter</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">lon</span><span class="p">,</span><span class="n">lat</span><span class="p">,</span><span class="n">colour</span><span class="o">=</span><span class="n">factor</span><span class="p">(</span><span class="n">status</span><span class="p">)),</span><span class="n">data</span><span class="o">=</span><span class="n">loc</span><span class="p">[</span><span class="n">loc</span><span class="o">$</span><span class="n">status</span><span class="o">==</span><span class="s1">'moving'</span><span class="p">,],</span><span class="n">alpha</span><span class="o">=</span><span class="m">0.4</span><span class="p">)</span><span class="o">+</span><span class="w">
+</span><span class="n">geom_point</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">lon</span><span class="p">,</span><span class="n">lat</span><span class="p">,</span><span class="n">colour</span><span class="o">=</span><span class="n">factor</span><span class="p">(</span><span class="n">status</span><span class="p">)),</span><span class="n">data</span><span class="o">=</span><span class="n">centers</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="m">10</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="m">0.6</span><span class="p">)</span><span class="o">+</span><span class="w">
+</span><span class="n">geom_jitter</span><span class="p">(</span><span class="n">aes</span><span class="p">(</span><span class="n">lon</span><span class="p">,</span><span class="n">lat</span><span class="p">,</span><span class="n">colour</span><span class="o">=</span><span class="n">factor</span><span class="p">(</span><span class="n">status</span><span class="p">)),</span><span class="n">data</span><span class="o">=</span><span class="n">loc</span><span class="p">[</span><span class="n">loc</span><span class="o">$</span><span class="n">status</span><span class="o">!=</span><span class="s1">'moving'</span><span class="p">,],</span><span class="n">alpha</span><span class="o">=</span><span class="m">0.8</span><span class="p">)</span><span class="w">
+</span><span class="n">plot_taxi</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>## Warning: Removed 2616 rows containing missing values (geom_point).
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>## Warning: Removed 1 rows containing missing values (geom_point).
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>## Warning: Removed 53 rows containing missing values (geom_point).
+</code></pre>
+</div>
+
+<p><img src="figure/unnamed-chunk-7-1.png" alt="plot of chunk unnamed-chunk-7" /></p>
+
+<h2 id="some-insights-1">Some Insights:</h2>
+<p>I’ve never been to Portugal, but I can guess Vitoria is the CBD area or places of attractions in Porto, as the taxi trajectories are very dense at the southern Porto, around the Vitoria. <br />
+There are two main pick-up and drop-off area in the northeast and the northwest, which I guess are two residential area. <br />
+If you noticed there’re some big spots I drew on the map, which are the clustered pick-up and drop-off area with using simple kmeans clustering.</p>
+
+<p>the completed R code is available: <a href="https://github.com/6chaoran/DataStory/blob/master/SpotMeOnTheMap.R">here</a>, if you are interested to check out.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fa fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="http://localhost:4000/categories/#kaggle" class="page__taxonomy-item" rel="tag">kaggle</a><span class="sep">, </span>
+    
+      
+      
+      <a href="http://localhost:4000/categories/#visualization" class="page__taxonomy-item" rel="tag">visualization</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> Updated:</strong> <time datetime="2015-07-24T06:16:01+08:00">July 23, 2015</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=[vis] Spatial Visualization with ggmap R package http://localhost:4000/spatial-viz-ggmap/" class="btn btn--twitter" title="Share on Twitter"><i class="fa fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/spatial-viz-ggmap/" class="btn btn--facebook" title="Share on Facebook"><i class="fa fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=http://localhost:4000/spatial-viz-ggmap/" class="btn btn--google-plus" title="Share on Google Plus"><i class="fa fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://localhost:4000/spatial-viz-ggmap/" class="btn btn--linkedin" title="Share on LinkedIn"><i class="fa fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="http://localhost:4000/kaggle-titanic-tutorial/" class="pagination--pager" title="[kaggle] Tree based models in R on Titanic Data
+">Previous</a>
+    
+    
+      <a href="http://localhost:4000/kaggle-digit-recogition/" class="pagination--pager" title="[kaggle] Recognize the Digits
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+    
+    
+    
+      <li><a href="http://github.com/6chaoran"><i class="fa fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+    
+    
+    
+    <li><a href="http://localhost:4000/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2017 Chaoran Liu. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    <script src="http://localhost:4000/assets/js/main.min.js"></script>
+
+
+
+
+
+  </body>
+</html>

@@ -8,8 +8,9 @@ author_profile: true
 
 ### About Me
 
-My name is Chaoran, from China and currently residing in Singapore. 10 years ago, I won a scholarship and moved to Singapore for university. I considered myself lucky as I was exempted from either China’s college entry examination or Singapore’s A level test.
-My background is B.Eng Chemical Engineering and M.Sc. Industrial Engineering. But now I am a big fan of Data Science.
+My name is Chaoran, from China and currently residing in Singapore.    
+My background is B.Eng Chemical Engineering and M.Sc. Industrial Engineering.    
+But now I am a big fan of Data Science.
 
 ### About this Blog
 

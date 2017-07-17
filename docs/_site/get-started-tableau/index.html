@@ -1,0 +1,531 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.4.2 by Michael Rose
+  Copyright 2017 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE.txt
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin SEO -->
+
+
+
+
+
+
+
+
+
+<title>[vis] Getting Started With Tableau - Chaoran’s Data Story</title>
+
+
+
+
+<meta name="description" content="Intro to TableauAspired by the course ‘Data Visualization’ offered by University of Illinois on Cousera, I have worked on the interactive data visualization using Tableau. There is a free version of Tableau Public is available and you can upload the visualization online for sharing.  Tableau is one of the Business Intelligence tools that makes it easier to do with aesthetic chart plotting and interactive report generating. There are 3 main components used in Tableau: Worksheet, Dashboard and Story.  Worksheets are single chart or plot  Dashboard is a single page can compose with mupliple charts or plots  Story is like powerpoint in MS Office, which put a series of pages of charts in sequence.">
+
+
+
+
+<meta name="author" content="Chaoran Liu">
+
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="Chaoran's Data Story">
+<meta property="og:title" content="[vis] Getting Started With Tableau">
+
+
+  <link rel="canonical" href="http://localhost:4000/get-started-tableau/">
+  <meta property="og:url" content="http://localhost:4000/get-started-tableau/">
+
+
+
+  <meta property="og:description" content="Intro to TableauAspired by the course ‘Data Visualization’ offered by University of Illinois on Cousera, I have worked on the interactive data visualization using Tableau. There is a free version of Tableau Public is available and you can upload the visualization online for sharing.  Tableau is one of the Business Intelligence tools that makes it easier to do with aesthetic chart plotting and interactive report generating. There are 3 main components used in Tableau: Worksheet, Dashboard and Story.  Worksheets are single chart or plot  Dashboard is a single page can compose with mupliple charts or plots  Story is like powerpoint in MS Office, which put a series of pages of charts in sequence.">
+
+
+
+
+
+  
+
+  
+
+
+
+
+
+  <meta property="og:type" content="article">
+  <meta property="article:published_time" content="2015-08-11T06:16:01+08:00">
+
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context" : "http://schema.org",
+      "@type" : "Person",
+      "name" : "Chaoran Liu",
+      "url" : "http://localhost:4000",
+      "sameAs" : null
+    }
+  </script>
+
+
+
+
+
+
+<!-- end SEO -->
+
+
+<link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="Chaoran's Data Story Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://localhost:4000/assets/css/main.css">
+
+<!--[if lte IE 9]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+<meta http-equiv="cleartype" content="on">
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use http://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+  </head>
+
+  <body class="layout--single">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+    <div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <a class="site-title" href="http://localhost:4000/">Chaoran's Data Story</a>
+        <ul class="visible-links">
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/about/">About</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/year-archive/">Posts</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/categories/">Categories</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/tags/">Tags</a></li>
+          
+        </ul>
+        <button><div class="navicon"></div></button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="https://rawgit.com/6chaoran/DataStory/master/profile_pic.jpg" alt="Chaoran Liu" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name" itemprop="name">Chaoran Liu</h3>
+    
+      <p class="author__bio" itemprop="description">
+        data science enthusiast
+      </p>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="http://schema.org/Place">
+          <i class="fa fa-fw fa-map-marker" aria-hidden="true"></i> <span itemprop="name">Singapore</span>
+        </li>
+      
+
+      
+
+      
+        <li>
+          <a href="mailto:chaoran.liu@icloud.com">
+            <meta itemprop="email" content="chaoran.liu@icloud.com" />
+            <i class="fa fa-fw fa-envelope-square" aria-hidden="true"></i> Email
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+        <li>
+          <a href="https://www.linkedin.com/in/liuchaoran" itemprop="sameAs">
+            <i class="fa fa-fw fa-linkedin-square" aria-hidden="true"></i> LinkedIn
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+        <li>
+          <a href="https://github.com/6chaoran" itemprop="sameAs">
+            <i class="fa fa-fw fa-github" aria-hidden="true"></i> GitHub
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs">
+      <i class="fa fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="[vis] Getting Started With Tableau">
+    <meta itemprop="description" content="Intro to TableauAspired by the course ‘Data Visualization’ offered by University of Illinois on Cousera, I have worked on the interactive data visualization using Tableau. There is a free version of Tableau Public is available and you can upload the visualization online for sharing.  Tableau is one of the Business Intelligence tools that makes it easier to do with aesthetic chart plotting and interactive report generating. There are 3 main components used in Tableau: Worksheet, Dashboard and Story.  Worksheets are single chart or plot  Dashboard is a single page can compose with mupliple charts or plots  Story is like powerpoint in MS Office, which put a series of pages of charts in sequence.">
+    <meta itemprop="datePublished" content="August 10, 2015">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 class="page__title" itemprop="headline">[vis] Getting Started With Tableau
+</h1>
+          
+            <p class="page__meta"><i class="fa fa-clock-o" aria-hidden="true"></i> 
+
+
+
+
+  2 minute read
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        <h2 id="intro-to-tableau">Intro to Tableau</h2>
+<p>Aspired by the course ‘Data Visualization’ offered by University of Illinois on Cousera, I have worked on the interactive data visualization using Tableau. There is a free version of <a href="https://public.tableau.com/s/">Tableau Public</a> is available and you can upload the visualization online for sharing.  <br />
+Tableau is one of the Business Intelligence tools that makes it easier to do with aesthetic chart plotting and interactive report generating. There are 3 main components used in Tableau: Worksheet, Dashboard and Story.</p>
+<ul>
+  <li><strong>Worksheets</strong> are single chart or plot</li>
+  <li><strong>Dashboard</strong> is a single page can compose with mupliple charts or plots</li>
+  <li><strong>Story</strong> is like powerpoint in MS Office, which put a series of pages of charts in sequence.</li>
+</ul>
+
+<p>There are two kinds of charts that interest me: smart map and bubble chart. <br />
+I’m going to make use of the two chart to visual the U.S. Weather data set.</p>
+
+<h2 id="description-of-the-data-set">Description of the data set</h2>
+<p>The data is taken by U.S. Weather Serivce, the link of data set is available <a href="https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2FStormData.csv.bz2">here</a>. The comphrensive description of the data is in <a href="https://d396qusza40orc.cloudfront.net/repdata%2Fpeer2_doc%2Fpd01016005curr.pdf">here</a>.</p>
+
+<h2 id="data-manipulation-using-r">Data manipulation using R</h2>
+<p>As Tableau is not ideal for data munging, I would like to do the first-hand pre-processing with R.</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">head</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="nf">c</span><span class="p">(</span><span class="s2">"EVTYPE"</span><span class="p">,</span><span class="w">   </span><span class="s2">"LATITUDE"</span><span class="w">  </span><span class="p">,</span><span class="w"> </span><span class="s2">"LONGITUDE"</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="s2">"STATE"</span><span class="w"> </span><span class="p">,</span><span class="s2">"BGN_DATE"</span><span class="p">,</span><span class="s2">"FATALITIES"</span><span class="p">,</span><span class="s2">"INJURIES"</span><span class="p">,</span><span class="s2">"PROPDMG"</span><span class="p">,</span><span class="s2">"PROPDMGEXP"</span><span class="w"> </span><span class="p">)])</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>   EVTYPE LATITUDE LONGITUDE STATE           BGN_DATE FATALITIES INJURIES
+1 TORNADO     3040      8812    AL  4/18/1950 0:00:00          0       15
+2 TORNADO     3042      8755    AL  4/18/1950 0:00:00          0        0
+3 TORNADO     3340      8742    AL  2/20/1951 0:00:00          0        2
+4 TORNADO     3458      8626    AL   6/8/1951 0:00:00          0        2
+5 TORNADO     3412      8642    AL 11/15/1951 0:00:00          0        2
+6 TORNADO     3450      8748    AL 11/15/1951 0:00:00          0        6
+  PROPDMG PROPDMGEXP
+1    25.0          K
+2     2.5          K
+3    25.0          K
+4     2.5          K
+5     2.5          K
+6     2.5          K
+</code></pre>
+</div>
+
+<h3 id="formatting-variable-year-longitude-latitude">Formatting variable Year, Longitude, Latitude</h3>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">data</span><span class="o">$</span><span class="n">BGN_DATE</span><span class="o">&lt;-</span><span class="n">as.Date</span><span class="p">(</span><span class="n">data</span><span class="o">$</span><span class="n">BGN_DATE</span><span class="p">,</span><span class="n">format</span><span class="o">=</span><span class="s1">'%m/%d/%Y %H:%M:%S'</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">lubridate</span><span class="p">)</span><span class="w">
+</span><span class="n">data</span><span class="o">$</span><span class="n">Year</span><span class="o">&lt;-</span><span class="n">year</span><span class="p">(</span><span class="n">data</span><span class="o">$</span><span class="n">BGN_DATE</span><span class="p">)</span><span class="w">
+</span><span class="n">data</span><span class="o">$</span><span class="n">LONGITUDE</span><span class="o">&lt;-</span><span class="p">(</span><span class="o">-</span><span class="n">data</span><span class="o">$</span><span class="n">LONGITUDE</span><span class="o">/</span><span class="m">100</span><span class="p">)</span><span class="w">
+</span><span class="n">data</span><span class="o">$</span><span class="n">LATITUDE</span><span class="o">&lt;-</span><span class="n">data</span><span class="o">$</span><span class="n">LATITUDE</span><span class="o">/</span><span class="m">100</span><span class="w">
+</span><span class="n">head</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="nf">c</span><span class="p">(</span><span class="s2">"EVTYPE"</span><span class="p">,</span><span class="w">   </span><span class="s2">"LATITUDE"</span><span class="w">  </span><span class="p">,</span><span class="w"> </span><span class="s2">"LONGITUDE"</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="s2">"STATE"</span><span class="w"> </span><span class="p">,</span><span class="s2">"Year"</span><span class="p">,</span><span class="s2">"FATALITIES"</span><span class="p">,</span><span class="s2">"INJURIES"</span><span class="p">,</span><span class="s2">"PROPDMG"</span><span class="p">,</span><span class="s2">"PROPDMGEXP"</span><span class="w"> </span><span class="p">)])</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>   EVTYPE LATITUDE LONGITUDE STATE Year FATALITIES INJURIES PROPDMG
+1 TORNADO    30.40    -88.12    AL 1950          0       15    25.0
+2 TORNADO    30.42    -87.55    AL 1950          0        0     2.5
+3 TORNADO    33.40    -87.42    AL 1951          0        2    25.0
+4 TORNADO    34.58    -86.26    AL 1951          0        2     2.5
+5 TORNADO    34.12    -86.42    AL 1951          0        2     2.5
+6 TORNADO    34.50    -87.48    AL 1951          0        6     2.5
+  PROPDMGEXP
+1          K
+2          K
+3          K
+4          K
+5          K
+6          K
+</code></pre>
+</div>
+
+<h3 id="creating-economic-loss--property-loss--crop-loss">Creating Economic Loss = Property Loss + Crop Loss</h3>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">data</span><span class="o">$</span><span class="n">PROPDMGEXP</span><span class="o">&lt;-</span><span class="n">transformEXP</span><span class="p">(</span><span class="n">data</span><span class="o">$</span><span class="n">PROPDMGEXP</span><span class="p">)</span><span class="w">
+</span><span class="n">data</span><span class="o">$</span><span class="n">CROPDMGEXP</span><span class="o">&lt;-</span><span class="n">transformEXP</span><span class="p">(</span><span class="n">data</span><span class="o">$</span><span class="n">CROPDMGEXP</span><span class="p">)</span><span class="w">
+</span><span class="n">data</span><span class="o">$</span><span class="n">economicLoss</span><span class="o">&lt;-</span><span class="n">with</span><span class="p">(</span><span class="n">data</span><span class="p">,(</span><span class="n">PROPDMG</span><span class="o">*</span><span class="p">(</span><span class="m">10</span><span class="o">**</span><span class="n">PROPDMGEXP</span><span class="p">)</span><span class="o">+</span><span class="n">CROPDMG</span><span class="o">*</span><span class="p">(</span><span class="m">10</span><span class="o">**</span><span class="n">CROPDMGEXP</span><span class="p">)))</span><span class="w">
+</span></code></pre>
+</div>
+<h3 id="creating-health-impact--fatalities--injuries">Creating Health Impact = Fatalities + Injuries</h3>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">data</span><span class="o">$</span><span class="n">healthImpact</span><span class="o">&lt;-</span><span class="n">data</span><span class="o">$</span><span class="n">FATALITIES</span><span class="o">+</span><span class="n">data</span><span class="o">$</span><span class="n">INJURIES</span><span class="w">
+</span><span class="n">head</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="nf">c</span><span class="p">(</span><span class="s2">"EVTYPE"</span><span class="p">,</span><span class="w">   </span><span class="s2">"LATITUDE"</span><span class="w">  </span><span class="p">,</span><span class="w"> </span><span class="s2">"LONGITUDE"</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="s2">"STATE"</span><span class="w"> </span><span class="p">,</span><span class="s2">"BGN_DATE"</span><span class="p">,</span><span class="s2">"healthImpact"</span><span class="p">,</span><span class="s2">"economicLoss"</span><span class="w"> </span><span class="p">)])</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>   EVTYPE LATITUDE LONGITUDE STATE   BGN_DATE healthImpact economicLoss
+1 TORNADO    30.40    -88.12    AL 1950-04-18           15        25000
+2 TORNADO    30.42    -87.55    AL 1950-04-18            0         2500
+3 TORNADO    33.40    -87.42    AL 1951-02-20            2        25000
+4 TORNADO    34.58    -86.26    AL 1951-06-08            2         2500
+5 TORNADO    34.12    -86.42    AL 1951-11-15            2         2500
+6 TORNADO    34.50    -87.48    AL 1951-11-15            6         2500
+</code></pre>
+</div>
+
+<h3 id="subset-the-top-5-weather">Subset the top 5 weather</h3>
+<p>Too many EVTYPE, let’s look at the top 5 in frequency, after removing the disasters without impact or loss.</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">data</span><span class="o">&lt;-</span><span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="o">$</span><span class="n">economicLoss</span><span class="o">!=</span><span class="m">0</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">data</span><span class="o">$</span><span class="n">healthImpact</span><span class="o">!=</span><span class="m">0</span><span class="p">,]</span><span class="w">
+</span><span class="n">freqEVTYPE</span><span class="o">&lt;-</span><span class="n">data.frame</span><span class="p">(</span><span class="n">table</span><span class="p">(</span><span class="n">data</span><span class="o">$</span><span class="n">EVTYPE</span><span class="p">))</span><span class="w">
+</span><span class="n">freqEVTYPE</span><span class="o">&lt;-</span><span class="n">sortDF</span><span class="p">(</span><span class="n">freqEVTYPE</span><span class="p">,</span><span class="n">freqEVTYPE</span><span class="o">$</span><span class="n">Freq</span><span class="p">)</span><span class="w">
+</span><span class="n">head</span><span class="p">(</span><span class="n">freqEVTYPE</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>                 Var1  Freq
+423         TSTM WIND 63234
+364 THUNDERSTORM WIND 43655
+407           TORNADO 39944
+134              HAIL 26130
+73        FLASH FLOOD 20967
+258         LIGHTNING 13293
+</code></pre>
+</div>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">top5</span><span class="o">&lt;-</span><span class="nf">as.character</span><span class="p">(</span><span class="n">freqEVTYPE</span><span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">,</span><span class="m">1</span><span class="p">])</span><span class="w">
+</span><span class="n">data</span><span class="o">&lt;-</span><span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="o">$</span><span class="n">EVTYPE</span><span class="w"> </span><span class="o">%in%</span><span class="w"> </span><span class="n">top5</span><span class="p">,]</span><span class="w">
+</span></code></pre>
+</div>
+
+<h3 id="select-the-variables-we-need">Select the variables we need</h3>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">var</span><span class="o">&lt;-</span><span class="nf">c</span><span class="p">(</span><span class="s2">"EVTYPE"</span><span class="p">,</span><span class="w">   </span><span class="s2">"LATITUDE"</span><span class="w">  </span><span class="p">,</span><span class="w"> </span><span class="s2">"LONGITUDE"</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="s2">"STATE"</span><span class="w"> </span><span class="p">,</span><span class="s2">"Year"</span><span class="p">,</span><span class="s2">"healthImpact"</span><span class="p">,</span><span class="s2">"economicLoss"</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span><span class="n">data</span><span class="o">&lt;-</span><span class="n">data</span><span class="p">[,</span><span class="n">var</span><span class="p">]</span><span class="w">
+</span></code></pre>
+</div>
+
+<h3 id="output-the-datacsv">Output the data.csv</h3>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">write.csv</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="s1">'data.csv'</span><span class="p">,</span><span class="n">row.names</span><span class="o">=</span><span class="nb">F</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fa fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="http://localhost:4000/categories/#visualization" class="page__taxonomy-item" rel="tag">visualization</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> Updated:</strong> <time datetime="2015-08-11T06:16:01+08:00">August 10, 2015</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=[vis] Getting Started With Tableau http://localhost:4000/get-started-tableau/" class="btn btn--twitter" title="Share on Twitter"><i class="fa fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/get-started-tableau/" class="btn btn--facebook" title="Share on Facebook"><i class="fa fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=http://localhost:4000/get-started-tableau/" class="btn btn--google-plus" title="Share on Google Plus"><i class="fa fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://localhost:4000/get-started-tableau/" class="btn btn--linkedin" title="Share on LinkedIn"><i class="fa fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="http://localhost:4000/kaggle-digit-recogition/" class="pagination--pager" title="[kaggle] Recognize the Digits
+">Previous</a>
+    
+    
+      <a href="http://localhost:4000/reivew-course-stanford-ml/" class="pagination--pager" title="[notes] Review on Stanford Machine Learning Course
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+    
+    
+    
+      <li><a href="http://github.com/6chaoran"><i class="fa fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+    
+    
+    
+    <li><a href="http://localhost:4000/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2017 Chaoran Liu. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    <script src="http://localhost:4000/assets/js/main.min.js"></script>
+
+
+
+
+
+  </body>
+</html>
