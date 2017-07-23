@@ -78,7 +78,7 @@ analytics:
 # Site Author
 author:
   name             : "Chaoran Liu"
-  avatar           : https://rawgit.com/6chaoran/DataStory/master/profile_pic.jpg
+  avatar           : "https://rawgit.com/6chaoran/data-story/master/docs/profile_pic.jpg"
   bio              : "data science enthusiast"
   location         : "Singapore"
   email            : chaoran.liu@icloud.com
