@@ -8,7 +8,7 @@ tags:
   - python
   - deep learning
 layout:
-  - single
+  - default
 ---
 
 This time I am going to continue with the kaggle 101 level competition – [digit recogniser](https://www.kaggle.com/c/digit-recognizer) with deep learning tool Tensor Flow.   
