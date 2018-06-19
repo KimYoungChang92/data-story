@@ -115,7 +115,7 @@
 <!-- end custom head snippets -->
   </head>
 
-  <body class="layout--archive">
+  <body class="layout--single">
 
     <!--[if lt IE 9]>
 <div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
@@ -161,7 +161,7 @@
   
     <div class="author__avatar">
       
-        <img src="https://rawgit.com/6chaoran/DataStory/master/profile_pic.jpg" alt="Chaoran Liu" itemprop="image">
+        <img src="https://rawgit.com/6chaoran/data-story/master/docs/profile_pic.jpg" alt="Chaoran Liu" itemprop="image">
       
     </div>
   
@@ -268,11 +268,23 @@
   </div>
 
 
-  <div class="archive">
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="About">
     
-      <h1 class="page__title">About</h1>
     
-    <h3 id="about-me">About Me</h3>
+    <meta itemprop="dateModified" content="February 14, 2017">
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 class="page__title" itemprop="headline">About
+</h1>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        <h3 id="about-me">About Me</h3>
 
 <p>My name is Chaoran, from China and currently residing in Singapore.  <br />
 My background is B.Eng Chemical Engineering and M.Sc. Industrial Engineering.  <br />
@@ -289,8 +301,31 @@ Since Jan 2015, I’ve spent about half-year in learning data science. Having ex
 
 <p><a href="mailto:chaoran.liu@icloud.com">chaoran.liu@icloud.com</a></p>
 
-  </div>
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+          <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> Updated:</strong> <time datetime="2017-02-14">February 14, 2017</time></p>
+        
+      </footer>
+
+      
+
+      
+    </div>
+
+    
+  </article>
+
+  
+  
 </div>
+
 
     <div class="page__footer">
       <footer>
@@ -313,7 +348,7 @@ Since Jan 2015, I’ve spent about half-year in learning data science. Having ex
   </ul>
 </div>
 
-<div class="page__footer-copyright">&copy; 2017 Chaoran Liu. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+<div class="page__footer-copyright">&copy; 2018 Chaoran Liu. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
 
       </footer>
     </div>
