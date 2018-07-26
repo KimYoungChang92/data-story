@@ -1,8 +1,8 @@
 ## Shiny + shinydashboard + googleVis = Powerful Interactive Visiualization
 
-If you are a data scientist, who spent several weeks on developing a fantanstic model, you'd like to have an equally awesome way to visualize and demo your results. For R users, ggplots are good option, but no longer sufficient. R-shiny + shinydashboard + googleVis could be a wonderful combination for a quick demo application.
+If you are a data scientist, who spent several weeks on developing a fantanstic model, you'd like to have an equally awesome way to visualize and demo your results. For R users, ggplots are good option, but no longer sufficient. R-shiny + shinydashboard + googleVis could be a wonderful combination for a quick demo application.   
 For the purpose of illustration, I just downloaded a random sample data `test.csv` from kaggle's latest competitions:
-https://www.kaggle.com/c/new-york-city-taxi-fare-prediction/data
+https://www.kaggle.com/c/new-york-city-taxi-fare-prediction/data   
 The R shiny app is available here: https://6chaoran.shinyapps.io/nyc-taxi/
 
 ### R Shiny
@@ -66,7 +66,7 @@ shinyApp(ui = ui, server = server)
 reference: https://rstudio.github.io/shinydashboard/get_started.html
 
 ### googleVis for R
-Google Visualization is developed using Javascript and R package is available as `googleVis` in CRAN, with some limitation. Simple bar-chart, line-chart, tables are easily construsted and be able to meet our general needs. 
+Google Visualization is developed using Javascript and R package is available as `googleVis` in CRAN, with some limitation. Simple bar-chart, line-chart, tables are easily construsted and be able to meet our general needs.    
 Here is the exmample plots using googleVis: https://cran.r-project.org/web/packages/googleVis/vignettes/googleVis_examples.html
 Detail customerization of the charts need look up the documentation of google's javascript API and supply the setting as JSON format text to the `options` in R (e.g. `options = list(hAxis = "{textStyle:{fontSize:12},format:'percent',minValue:0,maxValue:1}"`)  
 
