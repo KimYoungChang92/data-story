@@ -3,6 +3,9 @@
 If you are a data scientist, who spent several weeks on developing a fantanstic model, you'd like to have an equally awesome way to visualize and demo your results. For R users, ggplots are good option, but no longer sufficient. R-shiny + shinydashboard + googleVis could be a wonderful combination for a quick demo application.
 For the purpose of illustration, I just downloaded a random sample data `test.csv` from kaggle's latest competitions:
 https://www.kaggle.com/c/new-york-city-taxi-fare-prediction/data   
+
+![shiny](https://github.com/6chaoran/data-story/blob/master/shinydashboard-googleVis/shiny.PNG)
+
 The R shiny app is available here: https://6chaoran.shinyapps.io/nyc-taxi/
 
 ### R Shiny
@@ -18,6 +21,9 @@ reference: https://shiny.rstudio.com/tutorial/
 shinydashboard provide neat and nice interface, with customizable header, sidebar and body. I usually just need to define my title in header, list the tabs or selection panel in sidebar, and at last assemble all the tables and charts into the body section. Make use of `fluidRow` and `column` function to align your components in body.    
 
 we can use following code to build the framework of the dashboard:
+
+![shinydashboard](https://github.com/6chaoran/data-story/blob/master/shinydashboard-googleVis/shinydashboard.PNG)
+
 ```r
 library(shiny)
 library(shinydashboard)
@@ -71,6 +77,9 @@ Here is the exmample plots using googleVis: https://cran.r-project.org/web/packa
 Detail customerization of the charts need look up the documentation of google's javascript API and supply the setting as JSON format text to the `options` in R (e.g. `options = list(hAxis = "{textStyle:{fontSize:12},format:'percent',minValue:0,maxValue:1}"`)  
 
 For example, a simple donut chart can be constructed using following code:
+
+![pie-chart](https://github.com/6chaoran/data-story/blob/master/shinydashboard-googleVis/googleVis.PNG)
+
 ```r
 library(dplyr)
 library(data.table)
@@ -107,6 +116,8 @@ Google Vis Official Documenation: https://cran.r-project.org/web/packages/google
 ### leaflet for R
 googleVis is good enough for most of charts, except for maps, because maps in googleVis is replied on googleMap API, which is not free of charge. Leaflet for R is an good alternative.
 
+![leaflet](https://github.com/6chaoran/data-story/blob/master/shinydashboard-googleVis/leaflet.PNG)
+
 ```r
 library(leaflet)
 df %>% 
@@ -131,3 +142,5 @@ df %>%
             zoom = 12)
 ```
 reference: https://rstudio.github.io/leaflet/
+
+### Put Together
