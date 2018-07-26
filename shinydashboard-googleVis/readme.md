@@ -145,4 +145,4 @@ reference: https://rstudio.github.io/leaflet/
 
 ### Put Together
 I make 4 functions to plot 4 charts respectives and defined in a seperate R file, [nyc-taxi.R](https://github.com/6chaoran/data-story/blob/master/shinydashboard-googleVis/nyc-taxi/nyc-taxi.R), which is then loaded in our shiny app, [app.R](https://github.com/6chaoran/data-story/blob/master/shinydashboard-googleVis/nyc-taxi/app.R).   
-If you'd like to replicate the result, please feel free to click the links above to view the complete R code.
+If you'd like to replicate the result, please feel free to click the links above to view the [complete R code](https://github.com/6chaoran/data-story/tree/master/shinydashboard-googleVis/nyc-taxi).
