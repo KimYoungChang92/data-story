@@ -6,7 +6,9 @@ categories:
 tags:
   - shiny
 ---
-<img src = "https://www.rstudio.com/wp-content/uploads/2014/04/shiny-400x464.png" height = 100>  <img src = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" height = 100> <img src = "https://leafletjs.com/docs/images/logo.png" height = 100>    
+![](https://www.rstudio.com/wp-content/uploads/2014/04/shiny-400x464.png){:height="150px"}  
+<img src = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" height = 100> 
+<img src = "https://leafletjs.com/docs/images/logo.png" height = 100>    
 If you are a data scientist, who spent several weeks on developing a fantanstic model, you'd like to have an equally awesome way to visualize and demo your results. For R users, ggplots are good option, but no longer sufficient. R-shiny + shinydashboard + googleVis could be a wonderful combination for a quick demo application.
 For the purpose of illustration, I just downloaded a random sample data `test.csv` from kaggle's latest competitions:
 [https://www.kaggle.com/c/new-york-city-taxi-fare-prediction/data](https://www.kaggle.com/c/new-york-city-taxi-fare-prediction/data)   
