@@ -1,9 +1,14 @@
 # Install Airflow 1.9 on Ubuntu 18.04 LTS
 
+## 1. About Airflow
+
 ## 2. Install Airflow
 
-[Airflow official website](https://airflow.apache.org/installation.html)
+First of all, make sure python2.7 and pip are installed and upgraded to the latest.
+create a directory for Airflow: `mkdir ~/airflow`
+set it as the home directory: `export AIRFLOW_HOME='~/airflow'`
 
+refer to [Airflow official website](https://airflow.apache.org/installation.html), install the current latest version, using:
 ```
 pip install apache-airflow==1.9.0
 ```
@@ -15,7 +20,7 @@ once installation is completed, type `airflow version` to verify.
 
 ### 3.1.initialize the database
 
-initialize the default database using
+initialize the default database using following, and a database `airflow.db` file will be created.
 
 ```
 airflow initdb
@@ -25,12 +30,8 @@ airflow initdb
 
 ### 3.2. start your webUI/scheduler
 
-
-```
-airflow webserver
-# open another terminal and type
-airflow scheduler
-```
+run `airflow scheduler` to start airflow scheduler.
+As the process is running fore-ground, open another terminal, and run `airflow webserver` to start your webUI.
 
 if you also encountered error:
 
@@ -41,8 +42,10 @@ if you also encountered error:
 
 reference:[https://blog.csdn.net/aubdiy/article/details/73930865](https://blog.csdn.net/aubdiy/article/details/73930865)
 
-If everything is successful, you will be able see the Airflow Web UI, as follow:
+If everything is successful, you will be able see the Airflow Web UI (http://localhost:8080) as follow:
 ![airflow-webserver](https://github.com/6chaoran/data-story/raw/master/data-tools/airflow/image/airflow-webui.png)
+
+__tips:__ if you are running airflow at remote server, you need set up port forwarding at your client side.(e.g. Windows: Putty > Connection > SSH > Auth > Tunnels > Add new forwarded port, Mac: ssh user@server.ip -L 8080:localhost:8080)
 
 ### 3.3. test your DAG
 There are some sample DAGs pre-defined in airflow. 
@@ -81,7 +84,7 @@ airflow backfill tutorial -s 2018-07-11 -e 2018-07-12
 you will notice the backfill job is registered in webUI as well:
 ![airflow-webui2](https://github.com/6chaoran/data-story/raw/master/data-tools/airflow/image/airflow-webui2.png)
 
-## 4. Choise of Executor
+## 4. Choices of Executors
 
 
 Airflow offer different execution mode for different scenarios:
@@ -157,6 +160,38 @@ airflow webserver -D
 Now my airflow setup is completed, I just need write my own DAG file and drop into `~/airflow/dags`
 
 ## 5. Final Notes
+
+### 5.1 Additional Tips
+
+1) run airflow process with -D flag so that the process will be daemonize, which means will run in background. for example:
+```
+airflow scheduler -D
+airflow webserver -p 8080 -D
+```
+
+2) airflow webserver will have multiple (4 by default) workers, killing webserver workers process if you want to restart/shutdown your airflow. for example:
+```
+ps -ef | grep airflow
+sudo kill -9 airflow-pids
+```
+
+3) can't daemonize the process
+try delete the `.err` and `.pid` file in airflow folder. for example:
+```
+cd ~/airflow
+rm airflow-webserver.err airflow-webserver.pid
+```
+
+4) DAGs triggered but never run or in queue
+* make sure airflow scheduler is running
+* make sure airflow workers are running
+* make sure the pause toggle on the left side is turned on
+
+### 5.2 DAG code submission
+Due to some security concern, the DAG schudeling code is centralized and managed by Data Engineering team. 
+DAG code is usually submitted to git and synchronized to airflow.
+I simply create a crontab job to sync DAG repository from bitbucket to airflow DAG folder every miniute.
+
 
 ## Reference:
 ----
