@@ -9,5 +9,15 @@ pip install apache-airflow==1.9.0
 ```
 
 once installation is completed, type `airflow version` to verify.
+![](https://github.com/6chaoran/data-story/raw/master/data-tools/airflow/airflow-version.png)
 
+## Configure Airflow
+
+### 1.initialize the database
+
+initialize the default database using
+
+```
+airflow initdb
+```
 
