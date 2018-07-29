@@ -116,7 +116,7 @@ GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO ubuntu;
 ALTER ROLE ubuntu LOGIN;
 ```
 __tips__: don't forget `;` when key the above command.
-![airflow-postgre-db](https://github.com/6chaoran/data-story/raw/master/data-tools/airflow/image/airflow-postgre-db.png)
+![airflow-postgre-db](https://github.com/6chaoran/data-story/raw/master/data-tools/airflow/image/airflow-postgres-db.png)
 
 use `\du` to confirm the role ubuntu is properly set:
 
@@ -137,7 +137,7 @@ change the listen port: `/etc/postgresql/9.*/main/pg_hba.conf`
 
 change configure the `postgresql.conf` file to open the listen address to all ip addresses:
 
-*listen_addresses = '*'.
+* listen_addresses = '*'.
 
 start a postgresql service
 
@@ -158,7 +158,7 @@ Finally, re-initialize the airflow database `airflow initdb`. You will find `INF
 airflow scheduler -D
 airflow webserver -D
 ```
-__tips__: use `-D` flag to run daemonized process, which will alow program to run at background.
+__tips__: use `-D` flag to run daemonized process, which will alow program to run at background.   
 Now my airflow setup is completed, I just need write my own DAG file and drop into `~/airflow/dags`
 
 ## 5. Final Notes
