@@ -115,7 +115,7 @@ ALTER ROLE ubuntu CREATEDB;
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO ubuntu;
 ALTER ROLE ubuntu LOGIN;
 ```
-tips: don't forget `;`, when key the above command.
+__tips__: don't forget `;` when key the above command.
 ![airflow-postgre-db](https://github.com/6chaoran/data-story/raw/master/data-tools/airflow/image/airflow-postgre-db.png)
 
 use `\du` to confirm the role ubuntu is properly set:
@@ -125,7 +125,7 @@ use `\du` to confirm the role ubuntu is properly set:
  Role name |                         Attributes                         | Member of 
 -----------+------------------------------------------------------------+-----------
  postgres  | Superuser, Create role, Create DB, Replication, Bypass RLS | {}
- ubuntu    | Superuser, Create DB 				                        | {}
+ ubuntu    | Superuser, Create DB                                       | {}
 ```
 
 use `\q` to quit the postgres mode
@@ -135,20 +135,22 @@ change the listen port: `/etc/postgresql/9.*/main/pg_hba.conf`
 * ipv4 address to `0.0.0.0/0`
 * ipv4 connection `md5` to `trust`
 
-In the meantime, we also need to configure the postgresql.conf file to open the listen address to all ip addresses:
+change configure the `postgresql.conf` file to open the listen address to all ip addresses:
 
-listen_addresses = '*'.
-And we need to start a postgresql service
-`sudo service postgresql start`
+*listen_addresses = '*'.
 
-### 4.3. Config Airflow.cfg file
+start a postgresql service
+
+* `sudo service postgresql start`
+
+### 4.3. Configue Airflow.cfg file
 
 use `vim ~/airflow/airflow.cfg` to modify config file:
 
 * change the mode of executor: `executor = LocalExecutor`
 * change database connection: `sql_alchemy_conn = postgresql+psycopg2://ubuntu@localhost:5432/airflow`
 
-Finally, re-initialize the airflow database `airflow initdb`
+Finally, re-initialize the airflow database `airflow initdb`. You will find `INFO - Using executor LocalExecutor`, meaning LocalExecutor is successful set up.
 
 ### 4.4 Restart Aiflow scheduler/UI
 
@@ -156,7 +158,7 @@ Finally, re-initialize the airflow database `airflow initdb`
 airflow scheduler -D
 airflow webserver -D
 ```
-* tips: use `-D` flag to run daemonized process, which will alow program to run at background.
+__tips__: use `-D` flag to run daemonized process, which will alow program to run at background.
 Now my airflow setup is completed, I just need write my own DAG file and drop into `~/airflow/dags`
 
 ## 5. Final Notes
@@ -194,5 +196,5 @@ I simply create a crontab job to sync DAG repository from bitbucket to airflow D
 
 
 ## Reference:
-----
+[Airflow official website](https://airflow.apache.org/installation.html)
 [Installing Apache Airflow on Ubuntu/AWS – A.R.G.O. – Medium](https://medium.com/a-r-g-o/installing-apache-airflow-on-ubuntu-aws-6ebac15db211)
