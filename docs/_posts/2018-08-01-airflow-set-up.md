@@ -11,10 +11,10 @@ Compared with our company's existing scheduling tool - crontab, it provides adva
 In this post, I'm going to record down my journey of airflow setup.
 
 ## Content
-* 1. Install Airflow
-* 2. Configure Airflow
-* 3. Choices of Executors
-* 4. Final Notes
+* 1.Install Airflow
+* 2.Configure Airflow
+* 3.Choices of Executors
+* 4.Final Notes
 
 ## 1. Install Airflow
 
