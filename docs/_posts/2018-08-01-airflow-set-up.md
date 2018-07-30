@@ -5,10 +5,18 @@ categories:
   - data-tool
 ---
 ![logo](https://cdn-images-1.medium.com/max/2000/1*fSL_bB5OrIrsxnP6GdYR5Q.jpeg)
-## 1. About Airflow
 
+Airflow is an open source scheduling tool, incubated by Airbnb. Airflow is now getting popular and more Tech companies start using it.
+Compared with our company's existing scheduling tool - crontab, it provides advantageous features, such as user-friendly web UI, multi-process/distributed executions,notification when failure/re-try. 
+In this post, I'm going to record down my journey of airflow setup.
 
-## 2. Install Airflow
+## Content
+* 1. Install Airflow
+* 2. Configure Airflow
+* 3. Choices of Executors
+* 4. Final Notes
+
+## 1. Install Airflow
 
 First of all, make sure python2.7 and pip are installed and upgraded to the latest.
 create a directory for Airflow: `mkdir ~/airflow`
@@ -22,9 +30,9 @@ pip install apache-airflow==1.9.0
 once installation is completed, type `airflow version` to verify.
 ![airflow-version](https://github.com/6chaoran/data-story/raw/master/data-tools/airflow/image/airflow-version.png)
 
-## 3.Configure Airflow
+## 2.Configure Airflow
 
-### 3.1.initialize the database
+### 2.1.initialize the database
 
 initialize the default database using following, and a database `airflow.db` file will be created.
 
@@ -34,7 +42,7 @@ airflow initdb
 
 ![airflow-initdb](https://github.com/6chaoran/data-story/raw/master/data-tools/airflow/image/airflow-initdb.png)
 
-### 3.2. start your webUI/scheduler
+### 2.2. start your webUI/scheduler
 
 run `airflow scheduler` to start airflow scheduler.
 As the process is running fore-ground, open another terminal, and run `airflow webserver` to start your webUI.
@@ -53,7 +61,7 @@ If everything is successful, you will be able see the Airflow Web UI (http://loc
 
 __tips:__ if you are running airflow at remote server, you need set up port forwarding at your client side.(e.g. Windows: Putty > Connection > SSH > Auth > Tunnels > Add new forwarded port, Mac: ssh user@server.ip -L 8080:localhost:8080)
 
-### 3.3. test your DAG
+### 2.3. test your DAG
 There are some sample DAGs pre-defined in airflow. 
 
 * `airflow list_dags`, `airflow list_tasks` are useful commands to check the existing DAGs
@@ -90,7 +98,7 @@ airflow backfill tutorial -s 2018-07-11 -e 2018-07-12
 you will notice the backfill job is registered in webUI as well:
 ![airflow-webui2](https://github.com/6chaoran/data-story/raw/master/data-tools/airflow/image/airflow-webui2.png)
 
-## 4. Choices of Executors
+## 3. Choices of Executors
 
 
 Airflow offer different execution mode for different scenarios:
@@ -103,12 +111,12 @@ Airflow offer different execution mode for different scenarios:
 
 As I only have a single EC2 instance instead of airflow cluster, Local Executor mode will be the most appropreated.
 
-### 4.1. Install Postregres Database
+### 3.1. Install Postregres Database
 
 install postgres: `sudo apt-get install postgresql postgresql-contrib`
 
 
-### 4.2. Setup Postegres Database
+### 3.2. Setup Postegres Database
 
 sign in database with superuser postgres: `sudo -u postgres psql`
 
@@ -149,7 +157,7 @@ start a postgresql service
 
 * `sudo service postgresql start`
 
-### 4.3. Configue Airflow.cfg file
+### 3.3. Configue Airflow.cfg file
 
 use `vim ~/airflow/airflow.cfg` to modify config file:
 
@@ -158,7 +166,7 @@ use `vim ~/airflow/airflow.cfg` to modify config file:
 
 Finally, re-initialize the airflow database `airflow initdb`. You will find `INFO - Using executor LocalExecutor`, meaning LocalExecutor is successful set up.
 
-### 4.4 Restart Aiflow scheduler/UI
+### 3.4 Restart Aiflow scheduler/UI
 
 ```
 airflow scheduler -D
@@ -167,9 +175,9 @@ airflow webserver -D
 __tips__: use `-D` flag to run daemonized process, which will alow program to run at background.   
 Now my airflow setup is completed, I just need write my own DAG file and drop into `~/airflow/dags`
 
-## 5. Final Notes
+## 4. Final Notes
 
-### 5.1 Additional Tips
+### 4.1 Additional Tips
 
 1) run airflow process with -D flag so that the process will be daemonize, which means will run in background. for example:
 ```
@@ -195,7 +203,7 @@ rm airflow-webserver.err airflow-webserver.pid
 * make sure airflow workers are running
 * make sure the pause toggle on the left side is turned on
 
-### 5.2 DAG code submission
+### 4.2 DAG code submission
 Due to some security concern, the DAG schudeling code is centralized and managed by Data Engineering team. 
 DAG code is usually submitted to git and synchronized to airflow.
 I simply create a crontab job to sync DAG repository from bitbucket to airflow DAG folder every miniute.
