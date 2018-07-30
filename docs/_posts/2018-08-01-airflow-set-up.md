@@ -1,6 +1,11 @@
-# Install Airflow 1.9 on Ubuntu 18.04 LTS
-
+---
+title: "[tool] It's time to upgrade your scheduler to Airflow"
+date: 2018-08-01 15:11:01 +0800
+categories: 
+  - data-tool
+---
 ## 1. About Airflow
+
 
 ## 2. Install Airflow
 
