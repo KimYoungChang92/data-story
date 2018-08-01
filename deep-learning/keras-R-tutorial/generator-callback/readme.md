@@ -99,7 +99,7 @@ To launch your tensorboard, use:
 tensorboard --logdir=/model/tensorboard/
 ```
 after that, tensorboard will be available at http://localhost:6006. 
-![tensorboard-1](https://github.com/6chaoran/data-story/raw/master/deep-learning/keras-R-tutorial/generator-callback/image/tensorboard-1.JPG)
+![tensorboard-1](https://github.com/6chaoran/data-story/raw/master/deep-learning/keras-R-tutorial/image/tensorboard-1.JPG)
 We will notice that, there are no data captured in tensorboard, because we haven't run any model pointing to specified tensorboard directory.
 
 ## Training with generators & callbacks
@@ -120,7 +120,4 @@ hist <- model %>%
 ```
 
 We now can see the our training history compared with keras example training. Our training stops early at epoch-11, because eval_loss becomes stagnant.
-![tensorboard-2](https://github.com/6chaoran/data-story/raw/master/deep-learning/keras-R-tutorial/generator-callback/image/tensorboard-2.JPG)
-
-The code of keras_model is [here](https://github.com/6chaoran/data-story/raw/master/deep-learning/keras-R-tutorial/generator-callback/mnist.R).   
-The code of my_model is [here](https://github.com/6chaoran/data-story/raw/master/deep-learning/keras-R-tutorial/generator-callback/my_mnist.R).
+![tensorboard-2](https://github.com/6chaoran/data-story/raw/master/deep-learning/keras-R-tutorial/image/tensorboard-2.JPG)
