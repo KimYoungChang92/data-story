@@ -7,7 +7,7 @@ tags:
   - tutorial
   - keras
 ---
-## 
+
 The basic tutorial of Keras for R is provided by keras [here](https://keras.rstudio.com/index.html), which simple and fast to get started. But very soon, I realize this basic tutorial won't meet my need any more, when I want to train larger dataset. And this is the tutorial I'm going to discuss about keras generators, callbacks and tensorboard.
 
 ### Keras Installation
