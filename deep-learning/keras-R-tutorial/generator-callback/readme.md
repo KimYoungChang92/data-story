@@ -1,9 +1,8 @@
-
-## Keras for R
-The basic tutorial of Keras for R is recorded [here](https://keras.rstudio.com/index.html).
+## not so basic Keras tutorial for R
+The basic tutorial of Keras for R is provided by keras [here](https://keras.rstudio.com/index.html), which simple and fast to get started. But very soon, I realize this basic tutorial won't meet my need any more, when I want to train larger dataset. And this is the tutorial I'm going to discuss about keras generators, callbacks and tensorboard.
 
 ### Keras Installation
-
+If you haven't got your keras in R, just follow the steps at below:
 ```r
 devtools::install_github("rstudio/keras")
 library(keras)
@@ -11,6 +10,8 @@ install_keras()
 ```
 
 ### MNIST handwriting recognition
+This is the code copied from the basic keras tutorial for MNIST handwriting recogintion.
+I'm going to change based on this.  
 
 ```r
 library(keras)
@@ -94,12 +95,12 @@ callbacks <- list(
 
 ## Tensorboard
 Tensorboard is the UI view to compare different models as well as the model structure visualization.
-To launch your tensorboard, use:
+To launch your tensorboard, type this in your terminal:
 ```bash
 tensorboard --logdir=/model/tensorboard/
 ```
 after that, tensorboard will be available at http://localhost:6006. 
-![tensorboard-1](https://github.com/6chaoran/data-story/raw/master/deep-learning/keras-R-tutorial/image/tensorboard-1.JPG)
+![tensorboard-1](https://github.com/6chaoran/data-story/raw/master/deep-learning/keras-R-tutorial/generator-callback/image/tensorboard-1.JPG)
 We will notice that, there are no data captured in tensorboard, because we haven't run any model pointing to specified tensorboard directory.
 
 ## Training with generators & callbacks
@@ -120,4 +121,7 @@ hist <- model %>%
 ```
 
 We now can see the our training history compared with keras example training. Our training stops early at epoch-11, because eval_loss becomes stagnant.
-![tensorboard-2](https://github.com/6chaoran/data-story/raw/master/deep-learning/keras-R-tutorial/image/tensorboard-2.JPG)
+![tensorboard-2](https://github.com/6chaoran/data-story/raw/master/deep-learning/keras-R-tutorial/generator-callback/image/tensorboard-2.JPG)
+
+The code of keras_model is [here](https://github.com/6chaoran/data-story/raw/master/deep-learning/keras-R-tutorial/generator-callback/mnist.R).   
+The code of my_model is [here](https://github.com/6chaoran/data-story/raw/master/deep-learning/keras-R-tutorial/generator-callback/my_mnist.R).
