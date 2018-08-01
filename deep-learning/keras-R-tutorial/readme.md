@@ -98,9 +98,10 @@ To launch your tensorboard using:
 ```bash
 tensorboard --logdir=/model/tensorboard/
 ```
-after that, tensorboard will be available at http://localhost:6006.
+after that, tensorboard will be available at http://localhost:6006. We will notice that, there are no data captured in tensorboard, because we haven't run any model point to specific tensorboard directory. We will continue to train with generators and callbacks.
 
-## Training with generator
+## Training with generators & callbacks
+We just need to specify the callbacks in the fit_generator and set the number of steps in each epoch, which is usually number of rows / batch_size. 
 
 ```r
 valid.set <- my_generator(x_test,y_test,batch_size = nrow(x_test))()
@@ -115,3 +116,5 @@ hist <- model %>%
     validation_data = valid.set,
     validation_steps = 1)
 ```
+
+We now can see the our training history compared with keras example training.
