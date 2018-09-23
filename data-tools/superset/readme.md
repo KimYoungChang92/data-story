@@ -36,8 +36,17 @@ superset init
 superset runserver -d
 
 ```
+![isntallation](https://raw.githubusercontent.com/6chaoran/data-story/master/data-tools/superset/superset-installation.png)
+
+You are now in superset debug mode, if you are successfully. Just go to http://localhost:8088 and you will see the login page.
+![login-page](https://raw.githubusercontent.com/6chaoran/data-story/master/data-tools/superset/superset-login.png)
+
+After log in, you can view the example dashboards:
+![dashboard](https://raw.githubusercontent.com/6chaoran/data-story/master/data-tools/superset/superset-dashboard.png)
 
 ## set up systemd service
+
+If you want to deploy superset in production, you have to run it on the background. We can make superset run as systemd service, so that it can run as background proccess and re-start when failed or aborted.
 
 ```
 cd /etc/systemd/system
@@ -72,7 +81,10 @@ sudo systemctl start superset.service
 # check service status
 sudo systemctl status superset.service
 ```
+If everything is running ok, this is the expected output.
 
-now superset should be available at http://localhost:8088
+![systemd-status](https://raw.githubusercontent.com/6chaoran/data-story/master/data-tools/superset/systemd-service.png)
+
+Now superset should be available at http://localhost:8088.
 
 
