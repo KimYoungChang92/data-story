@@ -5,11 +5,13 @@
 Assume Anaconda is installed for python management.
 
 ```
-# create a virtualenv with python 2.7
-conda create -n superset python=2.7 
+# create a virtualenv with python 3.6
+conda create -n superset python=3.6
 ```
 
 ## install in virtualenv
+
+enter the virtual environment and follow the [official installation guide](https://superset.incubator.apache.org/installation.html#superset-installation-and-initialization).
 
 ```
 # enter virtualenv
@@ -52,8 +54,8 @@ After=multi-user.target
 
 [Service]
 Type=simple
-User=User
-ExecStart=/some-path/anaconda2/envs/superset/bin/gunicorn -w 2 --timeout 60 -b  0.0.0.0:8088 --limit-request-line 0 --limit-request-field_size 0 superset:app
+User=chaoran
+ExecStart=/home/chaoran/anaconda3/envs/superset/bin/gunicorn -w 2 --timeout 60 -b  0.0.0.0:8088 --limit-request-line 0 --limit-request-field_size 0 superset:app
 
 [Install]
 WantedBy=default.target
