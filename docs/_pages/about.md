@@ -8,7 +8,7 @@ author_profile: true
 
 ### About Me
 
-My name is Chaoran, from China and currently residing in Singapore.
+My name is Chaoran, from China and currently residing in Singapore.   
 I used to be an Engineer with background of B.Eng Chemical Engineering and M.Sc. Industrial Engineering.    
 But now I am a big fan of Data Science.
 
