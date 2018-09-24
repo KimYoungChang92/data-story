@@ -21,6 +21,6 @@ I believe the best way to learn is to teach and to share. Hope this blog may hel
 
 ### Contact Me
 
-* resume: [https://github.com/6chaoran/data-story/blob/master/resume.md](https://github.com/6chaoran/data-story/blob/master/resume.md)
+* [my resume](https://github.com/6chaoran/data-story/blob/master/resume.md)
 * [chaoran.liu@icloud.com](mailto:chaoran.liu@icloud.com)
 
