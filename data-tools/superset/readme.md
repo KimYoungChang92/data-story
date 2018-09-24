@@ -1,4 +1,15 @@
-# set up superset on ubuntu 16.04 LTS
+# set up Superset on ubuntu 16.04 LTS
+
+![logo](https://superset.incubator.apache.org/_images/s.png)
+
+Apache Superset (incubating) is a modern, enterprise-ready business intelligence web application.
+Compared with business-focused BI tool like Tableau, superset is more technology-navy. It supports more types of visualization and able to work in distributed manner to boost the query performance. Most importantly, it is free of charge!
+
+An example dashboard:
+
+![screenshot](https://superset.incubator.apache.org/_images/bank_dash.png)
+
+Let's go and set it up.
 
 ## create a virtualenv
 
