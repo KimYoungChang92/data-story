@@ -11,7 +11,7 @@
 *	Drove marketing decisions through customer segmentation, churn prediction and look-alike audience.
 *	Developed the channel propensity model to improve email campaign open rate by more than 10%.  
 *	Built the category recommendation engine for personalized thematic campaigns using Factorization Machines.
-*	Set up the team’s development platform, including R/Shiny server, Jupyter Notebook, Airflow, Superset & Pyspark on AWS.
+*	Set up the team’s analytical tools, including R/Shiny server, Jupyter Notebook, Airflow, Superset & Pyspark on AWS.
 *	Built multiple dashboards to track customer engagement, campaign performance and merchant benchmarking.
 
 ### Coupang | E-Commerce Data Scientist | Shanghai, China	| Jul 2016 – Jun 2017
