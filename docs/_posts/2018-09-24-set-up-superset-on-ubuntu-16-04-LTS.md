@@ -1,4 +1,12 @@
-# set up Superset on ubuntu 16.04 LTS
+---
+title: "[vis] set up Superset on ubuntu 16.04 LTS"
+date: 2018-09-24 21:37:00 +0800
+categories: 
+  - data-tool
+  - visualization
+tags:
+  - tutorial
+---
 
 ![logo](https://superset.incubator.apache.org/_images/s.png)
 
