@@ -57,6 +57,6 @@
 *	P.R.C. Scholarship | Singapore Ministry of Education | Sep 2017 – Feb 2018
 
 ## RELEVANT SKILLS
-*	Data ETL:	SQL(Hive/Presto/Impala/Netezza/Redshift), Spark, Airflow
+*	Data ETL:	SQL(Hive/Presto/Impala/Netezza/Redshift), Spark, Airflow, Docker
 *	Modelling:	R, Python, Keras, LightGBM/XGBoost, scikit-learn, MLlib, caret
-*	Visualization:	Tableau, Shiny, ggplot2, plotly, GoogleVis, Superset
+*	Visualization:	Tableau, Shiny, ggplot2, GoogleVis, Superset
