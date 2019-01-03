@@ -8,8 +8,6 @@ tags:
   - keras
 ---
 
-![logo](https://keras.io/img/keras-logo-small.jpg)
-
 # Introduction
 Wide and deep architect has been proven as one of deep learning applications combining memorization and generatlization in areas such as search and recommendation. Google released its [wide&deep learning](https://ai.googleblog.com/2016/06/wide-deep-learning-better-together-with.html) in 2016. 
 
