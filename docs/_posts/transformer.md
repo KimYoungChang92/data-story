@@ -16,25 +16,9 @@ Transformer, instead has:
 * position-encoding: to capture the position of tokens, since no convo or recurrent layers are applied
 * residual-connection: to increase model capability of generality, allow deeper model.
 
-## position encoding
-
-```python
-def positional_encoding(length, k):
-    num_timescales = k // 2
-    max_timescale = 10000
-    min_timescale = 1
-    pos = K.arange(length,dtype='float32')
-    log_timescale_increment = (
-          K.log(float(max_timescale) / float(min_timescale)) /
-          (tf.to_float(num_timescales) - 1))
-    inv_timescales = min_timescale * K.exp(
-      tf.to_float(tf.range(num_timescales)) * -log_timescale_increment)
-    scaled_time = tf.expand_dims(pos, 1) * tf.expand_dims(inv_timescales, 0)
-    signal = tf.concat([tf.sin(scaled_time), tf.cos(scaled_time)], axis=1)
-    return signal
-```
-
 ## scaled dot product attention
+
+!()[https://raw.githubusercontent.com/6chaoran/data-story/master/nlp/transformer/attention_head.JPG]
 
 ```python
 def scaled_dot_product_attention(Q,K,V,k,mask = False):
@@ -92,6 +76,8 @@ def multi_head_attention(Q,K,V,k,h,mask = False):
 
 ## position-wise feed forward
 
+![](https://raw.githubusercontent.com/6chaoran/data-story/master/nlp/transformer/feed-forward.JPG)
+
 ```python
 def position_wise_feed_foward(ff,filter_size,k):
     
@@ -110,7 +96,29 @@ def add_and_norm(input1, input2):
     return out
 ```
 
+## position encoding
+
+![](https://raw.githubusercontent.com/6chaoran/data-story/master/nlp/transformer/positional-encoding.JPG)
+
+```python
+def positional_encoding(length, k):
+    num_timescales = k // 2
+    max_timescale = 10000
+    min_timescale = 1
+    pos = K.arange(length,dtype='float32')
+    log_timescale_increment = (
+          K.log(float(max_timescale) / float(min_timescale)) /
+          (tf.to_float(num_timescales) - 1))
+    inv_timescales = min_timescale * K.exp(
+      tf.to_float(tf.range(num_timescales)) * -log_timescale_increment)
+    scaled_time = tf.expand_dims(pos, 1) * tf.expand_dims(inv_timescales, 0)
+    signal = tf.concat([tf.sin(scaled_time), tf.cos(scaled_time)], axis=1)
+    return signal
+```
+
 ## encoder block
+
+![](https://raw.githubusercontent.com/6chaoran/data-story/master/nlp/transformer/transformer-architecture.JPG)
 
 ```python
 def encoder_block(Q,k,h, filter_size):
