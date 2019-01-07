@@ -18,7 +18,7 @@ Transformer, instead has:
 
 ## scaled dot product attention
 
-!()[https://raw.githubusercontent.com/6chaoran/data-story/master/nlp/transformer/attention_head.JPG]
+![](https://raw.githubusercontent.com/6chaoran/data-story/master/nlp/transformer/attention_head.JPG)
 
 ```python
 def scaled_dot_product_attention(Q,K,V,k,mask = False):
