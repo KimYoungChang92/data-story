@@ -1,5 +1,12 @@
-# Build A Simple Machine Translator (part-1)
-*encoder decoder framework with lstm*
+---
+title: "[NLP] Build A Simple Machine Translator (part-1) encoder decoder framework with lstm"
+date: 2019-01-03 11:39:00 +0800
+categories: 
+  - deep learning
+  - NLP
+tags:
+  - keras, RNN
+---
 
 # Introduction
 
