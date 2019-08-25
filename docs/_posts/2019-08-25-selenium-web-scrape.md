@@ -1,5 +1,5 @@
 ---
-title: "[tutorial] Web Scrapinf of Javascript website"
+title: "[tutorial] Web Scraping of JavaScript website"
 date: 2019-08-25 19:21:00 +0800
 categories:
   - tutorial
@@ -9,10 +9,11 @@ categories:
 
 ## Introduction
 
-In this post, I'm using `selenium` to demostrate how to web scrape a javascript enabled page.
+In this post, I’m using `selenium` to demonstrate how to web scrape a JavaScript enabled page.
 
-### Why not BeautifulSoup ?
-If you had some experience of using python for web scraping, you probably already heard of `beautifulsoup` and `urllib`. By using the following code, we will be able to see the HTML and then use `HTML tags` to extract the desired elements. However, if the webpage embeded with javascript, you will notice that some of the HTML elements can't be seen from beautiful soup, because they are render by the javascript. Instead you will only see the `<script>` tags, which indicate the javascript codes are placed.
+### Why not Beautiful Soup ?
+
+If you had some experience of using python for web scraping, you probably already heard of `beautifulsoup` and `urllib`. By using the following code, we will be able to see the HTML and then use HTML tags to extract the desired elements. However, if the web page embedded with JavaScript, you will notice that some of the HTML elements can’t be seen from beautiful soup, because they are render by the JavaScript. Instead you will only see the `<script>` tags, which indicate the JavaScript codes are placed.
 
 ```python
 urlpage = 'https://apps.polkcountyiowa.gov/PolkCountyInmates/CurrentInmates/' 
@@ -29,7 +30,7 @@ the desired html elements are rendered from the `<script>`, so an alternative is
 
 ## Procedures of Web-Scraping using Selenium
 
-### 1. Pre-requsite
+### 1. Prerequisite
 
 * download the chrome driver from [https://chromedriver.chromium.org/downloads](https://chromedriver.chromium.org/downloads)
 * current stable version is 76.0.3809.126
@@ -104,7 +105,7 @@ for result in tqdm(results):
 	links.append(result.find_element_by_xpath('td/a').get_attribute('href'))
 ```
 
-### save the data
+### 4. save the data
 
 Finally, we can save the links to a csv for later usage.
 
