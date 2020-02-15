@@ -4,6 +4,14 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from datetime import datetime
 import os
+import pytz
+
+utc =pytz.utc
+sgp = pytz.timezone('Singapore')
+today = utc.localize(datetime.today())
+today_in_sgp = today.astimezone(sgp)
+suffix = today_in_sgp.strftime('%Y%m%d')
+print('today is {}'.format(suffix))
 
 URL = 'https://voice.baidu.com/act/newpneumonia/newpneumonia/'
 
@@ -78,8 +86,6 @@ df_countries = pd.DataFrame(countries)
 df_countries.head()
 
 # save data
-
-suffix = datetime.today().strftime('%Y%m%d')
 output_dir = 'covid19_data'
 output = os.path.join(output_dir, suffix)
 
@@ -97,3 +103,26 @@ df_states.to_csv(
 df_countries.to_csv(
     '{}/countries.csv'.format(output), 
     index = False, encoding='utf-8')
+
+# combine data
+def read_each(path, part = 'cities.csv'):
+    data = pd.read_csv(os.path.join(output_dir, path, part))
+    data['added_date'] = path
+    return data
+    
+def combine(output_dir):
+    dirs = os.listdir(os.path.join(output_dir))
+    data = {}
+    for part in ['cities.csv','states.csv','countries.csv']:
+        data[part] = []
+        for d in dirs:
+            each = read_each(d, part)
+            data[part].append(each)
+        data[part] = pd.concat(data[part])
+    return data
+
+print('combine data')
+data = combine(output_dir)
+for k,v in data.items():
+    print("{}: {}".format(k, str(v.shape)))
+    v.to_csv('summary_'+k, index = False)
